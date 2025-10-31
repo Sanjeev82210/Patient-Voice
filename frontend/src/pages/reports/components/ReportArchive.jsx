@@ -142,27 +142,27 @@ const ReportArchive = ({ onDownloadReport, onShareReport }) => {
   };
 
   const filteredReports = archivedReports?.filter(report => {
-      const matchesSearch = report?.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-                           report?.id?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-                           report?.generatedBy?.toLowerCase()?.includes(searchTerm?.toLowerCase());
-      const matchesType = filterType === 'all' || report?.type === filterType;
-      return matchesSearch && matchesType;
-    })?.sort((a, b) => {
-      switch (sortBy) {
-        case 'date-desc':
-          return new Date(b.generatedDate) - new Date(a.generatedDate);
-        case 'date-asc':
-          return new Date(a.generatedDate) - new Date(b.generatedDate);
-        case 'name-asc':
-          return a?.name?.localeCompare(b?.name);
-        case 'name-desc':
-          return b?.name?.localeCompare(a?.name);
-        case 'downloads-desc':
-          return b?.downloads - a?.downloads;
-        default:
-          return 0;
-      }
-    });
+    const matchesSearch = report?.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+      report?.id?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+      report?.generatedBy?.toLowerCase()?.includes(searchTerm?.toLowerCase());
+    const matchesType = filterType === 'all' || report?.type === filterType;
+    return matchesSearch && matchesType;
+  })?.sort((a, b) => {
+    switch (sortBy) {
+      case 'date-desc':
+        return new Date(b.generatedDate) - new Date(a.generatedDate);
+      case 'date-asc':
+        return new Date(a.generatedDate) - new Date(b.generatedDate);
+      case 'name-asc':
+        return a?.name?.localeCompare(b?.name);
+      case 'name-desc':
+        return b?.name?.localeCompare(a?.name);
+      case 'downloads-desc':
+        return b?.downloads - a?.downloads;
+      default:
+        return 0;
+    }
+  });
 
   const handleDownload = (report) => {
     if (onDownloadReport) {
@@ -185,16 +185,16 @@ const ReportArchive = ({ onDownloadReport, onShareReport }) => {
   };
 
   return (
-    <div className="card-clinical">
+    <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-amber-100 shadow-lg">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-xl font-semibold text-foreground">Report Archive</h2>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h2 className="text-xl font-semibold text-gray-800">Report Archive</h2>
+          <p className="text-sm text-gray-600 mt-1">
             Access and manage previously generated reports
           </p>
         </div>
         <div className="flex items-center space-x-2">
-          <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-gray-600">
             {filteredReports?.length} of {archivedReports?.length} reports
           </span>
         </div>
@@ -228,16 +228,16 @@ const ReportArchive = ({ onDownloadReport, onShareReport }) => {
         {filteredReports?.map((report) => (
           <div
             key={report?.id}
-            className="border border-border rounded-lg p-4 clinical-hover clinical-transition"
+            className="bg-white border border-gray-200 rounded-lg p-4 hover:border-amber-300 hover:shadow-md clinical-transition"
           >
             <div className="flex items-start justify-between">
               {/* Report Info */}
               <div className="flex items-start space-x-4 flex-1 min-w-0">
-                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Icon 
-                    name={getReportTypeIcon(report?.type)} 
-                    size={20} 
-                    className="text-primary" 
+                <div className="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Icon
+                    name={getReportTypeIcon(report?.type)}
+                    size={20}
+                    className="text-amber-600"
                   />
                 </div>
 
@@ -325,7 +325,7 @@ const ReportArchive = ({ onDownloadReport, onShareReport }) => {
           <Icon name="FileX" size={48} className="text-muted-foreground mx-auto mb-4" />
           <h3 className="text-lg font-medium text-foreground mb-2">No Reports Found</h3>
           <p className="text-muted-foreground mb-4">
-            {searchTerm || filterType !== 'all' ?'No reports match your current search and filter criteria.' :'No reports have been generated yet. Create your first report to get started.'
+            {searchTerm || filterType !== 'all' ? 'No reports match your current search and filter criteria.' : 'No reports have been generated yet. Create your first report to get started.'
             }
           </p>
           {(searchTerm || filterType !== 'all') && (

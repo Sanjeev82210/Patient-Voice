@@ -60,12 +60,12 @@ const DepartmentComparison = ({ className = '' }) => {
   };
 
   return (
-    <div className={`card-clinical ${className}`}>
+    <div className={`bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg ${className}`}>
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-foreground mb-2">
+        <h3 className="text-lg font-semibold text-gray-800 mb-2">
           Department Satisfaction Comparison
         </h3>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-gray-600">
           Average satisfaction scores by department this month
         </p>
       </div>
@@ -73,22 +73,22 @@ const DepartmentComparison = ({ className = '' }) => {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={departmentData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
-            <XAxis 
-              dataKey="department" 
+            <XAxis
+              dataKey="department"
               stroke="var(--color-muted-foreground)"
               fontSize={12}
               angle={-45}
               textAnchor="end"
               height={80}
             />
-            <YAxis 
+            <YAxis
               domain={[3.5, 5.0]}
               stroke="var(--color-muted-foreground)"
               fontSize={12}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Bar 
-              dataKey="satisfaction" 
+            <Bar
+              dataKey="satisfaction"
               fill="var(--color-primary)"
               radius={[4, 4, 0, 0]}
             />

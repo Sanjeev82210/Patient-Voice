@@ -103,7 +103,7 @@ const SatisfactionTrendsChart = ({ className = '' }) => {
           <p className="text-sm font-medium text-foreground mb-2">{label}</p>
           {payload?.map((entry, index) => (
             <div key={index} className="flex items-center space-x-2 text-sm">
-              <div 
+              <div
                 className="w-3 h-3 rounded-full"
                 style={{ backgroundColor: entry?.color }}
               />
@@ -118,15 +118,15 @@ const SatisfactionTrendsChart = ({ className = '' }) => {
   };
 
   return (
-    <div className={`card-clinical ${className}`}>
+    <div className={`bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg ${className}`}>
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-            <Icon name="TrendingUp" size={20} className="text-primary" />
+          <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+            <Icon name="TrendingUp" size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-foreground">Satisfaction Trends</h3>
-            <p className="text-sm text-muted-foreground">Monthly satisfaction scores by category</p>
+            <h3 className="text-lg font-semibold text-gray-800">Satisfaction Trends</h3>
+            <p className="text-sm text-gray-600">Monthly satisfaction scores by category</p>
           </div>
         </div>
         <div className="flex items-center space-x-2">
@@ -148,62 +148,62 @@ const SatisfactionTrendsChart = ({ className = '' }) => {
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={trendData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
-            <XAxis 
-              dataKey="month" 
+            <XAxis
+              dataKey="month"
               stroke="var(--color-muted-foreground)"
               fontSize={12}
             />
-            <YAxis 
+            <YAxis
               domain={[1, 5]}
               stroke="var(--color-muted-foreground)"
               fontSize={12}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend />
-            <Line 
-              type="monotone" 
-              dataKey="overallSatisfaction" 
-              stroke="var(--color-primary)" 
+            <Line
+              type="monotone"
+              dataKey="overallSatisfaction"
+              stroke="var(--color-primary)"
               strokeWidth={3}
               name="Overall Satisfaction"
               dot={{ fill: 'var(--color-primary)', strokeWidth: 2, r: 4 }}
             />
-            <Line 
-              type="monotone" 
-              dataKey="medicalCare" 
-              stroke="#10B981" 
+            <Line
+              type="monotone"
+              dataKey="medicalCare"
+              stroke="#10B981"
               strokeWidth={2}
               name="Medical Care"
               dot={{ fill: '#10B981', strokeWidth: 2, r: 3 }}
             />
-            <Line 
-              type="monotone" 
-              dataKey="staffBehavior" 
-              stroke="#8B5CF6" 
+            <Line
+              type="monotone"
+              dataKey="staffBehavior"
+              stroke="#8B5CF6"
               strokeWidth={2}
               name="Staff Behavior"
               dot={{ fill: '#8B5CF6', strokeWidth: 2, r: 3 }}
             />
-            <Line 
-              type="monotone" 
-              dataKey="facilityClean" 
-              stroke="#F59E0B" 
+            <Line
+              type="monotone"
+              dataKey="facilityClean"
+              stroke="#F59E0B"
               strokeWidth={2}
               name="Facility Cleanliness"
               dot={{ fill: '#F59E0B', strokeWidth: 2, r: 3 }}
             />
-            <Line 
-              type="monotone" 
-              dataKey="waitTimes" 
-              stroke="#EF4444" 
+            <Line
+              type="monotone"
+              dataKey="waitTimes"
+              stroke="#EF4444"
               strokeWidth={2}
               name="Wait Times"
               dot={{ fill: '#EF4444', strokeWidth: 2, r: 3 }}
             />
-            <Line 
-              type="monotone" 
-              dataKey="communication" 
-              stroke="#06B6D4" 
+            <Line
+              type="monotone"
+              dataKey="communication"
+              stroke="#06B6D4"
               strokeWidth={2}
               name="Communication"
               dot={{ fill: '#06B6D4', strokeWidth: 2, r: 3 }}

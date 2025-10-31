@@ -1,4 +1,4 @@
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 /**
  * Department Service
@@ -11,6 +11,7 @@ export const departmentService = {
      */
     async getDepartments(activeOnly = true) {
         try {
+            if (!isSupabaseConfigured()) return [];
             let query = supabase
                 .from('departments')
                 .select('*')
@@ -36,6 +37,7 @@ export const departmentService = {
      */
     async getDepartmentById(id) {
         try {
+            if (!isSupabaseConfigured()) return null;
             const { data, error } = await supabase
                 .from('departments')
                 .select(`
@@ -59,6 +61,7 @@ export const departmentService = {
      */
     async createDepartment(departmentData) {
         try {
+            if (!isSupabaseConfigured()) throw new Error('Supabase is not configured.');
             const { data, error } = await supabase
                 .from('departments')
                 .insert([departmentData])
@@ -79,6 +82,7 @@ export const departmentService = {
      */
     async updateDepartment(id, updates) {
         try {
+            if (!isSupabaseConfigured()) throw new Error('Supabase is not configured.');
             const { data, error } = await supabase
                 .from('departments')
                 .update(updates)
@@ -100,6 +104,7 @@ export const departmentService = {
      */
     async deleteDepartment(id) {
         try {
+            if (!isSupabaseConfigured()) throw new Error('Supabase is not configured.');
             const { error } = await supabase
                 .from('departments')
                 .delete()

@@ -2,7 +2,7 @@ import React from 'react';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 
-const RecentFeedbackAlerts = ({ className = '' }) => {
+const RecentFeedbackAlerts = ({ className = '', onFilterClick }) => {
   const alerts = [
     {
       id: 1,
@@ -56,6 +56,16 @@ const RecentFeedbackAlerts = ({ className = '' }) => {
     }
   ];
 
+  const handleView = (alert) => {
+    // Navigate to feedback management with specific feedback ID
+    window.location.href = `/feedback-management?id=${alert.id}`;
+  };
+
+  const handleRespond = (alert) => {
+    // Navigate to feedback management to respond
+    window.location.href = `/feedback-management?id=${alert.id}&action=respond`;
+  };
+
   const getPriorityColor = (priority) => {
     switch (priority) {
       case 'high': return 'text-error';
@@ -97,17 +107,31 @@ const RecentFeedbackAlerts = ({ className = '' }) => {
   };
 
   return (
-    <div className={`card-clinical ${className}`}>
+    <div className={`bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg ${className}`}>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-lg font-semibold text-foreground mb-1">
+          <h3 className="text-lg font-semibold text-gray-800 mb-1">
             Recent Feedback Alerts
           </h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-gray-600">
             Latest patient feedback requiring attention
           </p>
         </div>
-        <Button variant="outline" size="sm" iconName="Filter">
+        <Button
+          variant="outline"
+          size="sm"
+          iconName="Filter"
+          onClick={() => {
+            if (typeof onFilterClick === 'function') {
+              onFilterClick();
+            } else {
+              const el = document.getElementById('dashboard-filters');
+              if (el?.scrollIntoView) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }
+          }}
+        >
           Filter
         </Button>
       </div>
@@ -150,10 +174,20 @@ const RecentFeedbackAlerts = ({ className = '' }) => {
                   {alert?.timestamp}
                 </span>
                 <div className="flex items-center space-x-2">
-                  <Button variant="ghost" size="sm" iconName="Eye">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    iconName="Eye"
+                    onClick={() => handleView(alert)}
+                  >
                     View
                   </Button>
-                  <Button variant="outline" size="sm" iconName="MessageSquare">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    iconName="MessageSquare"
+                    onClick={() => handleRespond(alert)}
+                  >
                     Respond
                   </Button>
                 </div>
@@ -163,7 +197,13 @@ const RecentFeedbackAlerts = ({ className = '' }) => {
         ))}
       </div>
       <div className="mt-4 pt-4 border-t border-border">
-        <Button variant="outline" fullWidth iconName="ArrowRight" iconPosition="right">
+        <Button
+          variant="outline"
+          fullWidth
+          iconName="ArrowRight"
+          iconPosition="right"
+          onClick={() => window.location.href = '/feedback-management'}
+        >
           View All Feedback
         </Button>
       </div>

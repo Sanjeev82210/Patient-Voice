@@ -11,12 +11,16 @@ const FeedbackDetail = ({ feedback, onClose, onStatusUpdate, onResponse }) => {
 
   if (!feedback) {
     return (
-      <div className="bg-card border border-border rounded-lg p-8 text-center">
-        <Icon name="MessageSquare" size={48} className="text-muted-foreground mx-auto mb-4" />
-        <h3 className="text-lg font-semibold text-foreground mb-2">Select Feedback to View</h3>
-        <p className="text-muted-foreground">
-          Choose a feedback submission from the list to view detailed information and take actions.
-        </p>
+      <div className="bg-gradient-to-br from-violet-400 to-purple-500 rounded-xl border-2 border-white/20 shadow-2xl p-12 text-center">
+        <div className="flex flex-col items-center justify-center">
+          <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-6">
+            <Icon name="MessageSquare" size={40} className="text-white" />
+          </div>
+          <h3 className="text-2xl font-bold text-white mb-3">Select Feedback to View</h3>
+          <p className="text-white/80 text-lg max-w-md">
+            Choose a feedback submission from the list to view detailed information and take actions.
+          </p>
+        </div>
       </div>
     );
   }
@@ -115,7 +119,7 @@ const FeedbackDetail = ({ feedback, onClose, onStatusUpdate, onResponse }) => {
               </p>
             </div>
           </div>
-          
+
           <div className="flex items-center space-x-2">
             <Select
               options={statusOptions}
@@ -146,11 +150,10 @@ const FeedbackDetail = ({ feedback, onClose, onStatusUpdate, onResponse }) => {
             <button
               key={tab?.id}
               onClick={() => setActiveTab(tab?.id)}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium clinical-transition ${
-                activeTab === tab?.id
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-              }`}
+              className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium clinical-transition ${activeTab === tab?.id
+                ? 'bg-primary text-primary-foreground'
+                : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                }`}
             >
               <Icon name={tab?.icon} size={16} />
               <span>{tab?.label}</span>
@@ -170,10 +173,9 @@ const FeedbackDetail = ({ feedback, onClose, onStatusUpdate, onResponse }) => {
                   {getRatingStars(feedback?.overallRating)}
                 </div>
                 <span className="text-2xl font-bold text-foreground">{feedback?.overallRating}.0</span>
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  feedback?.sentiment === 'positive' ? 'bg-green-100 text-green-800' :
-                  feedback?.sentiment === 'negative'? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
-                }`}>
+                <span className={`px-3 py-1 rounded-full text-sm font-medium ${feedback?.sentiment === 'positive' ? 'bg-green-100 text-green-800' :
+                  feedback?.sentiment === 'negative' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
+                  }`}>
                   {feedback?.sentiment}
                 </span>
               </div>
@@ -228,10 +230,9 @@ const FeedbackDetail = ({ feedback, onClose, onStatusUpdate, onResponse }) => {
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span className="text-sm text-muted-foreground">Priority:</span>
-                    <span className={`text-sm font-medium ${
-                      feedback?.priority === 'high' ? 'text-red-600' :
-                      feedback?.priority === 'urgent'? 'text-red-700' : 'text-foreground'
-                    }`}>
+                    <span className={`text-sm font-medium ${feedback?.priority === 'high' ? 'text-red-600' :
+                      feedback?.priority === 'urgent' ? 'text-red-700' : 'text-foreground'
+                      }`}>
                       {feedback?.priority}
                     </span>
                   </div>
@@ -268,7 +269,7 @@ const FeedbackDetail = ({ feedback, onClose, onStatusUpdate, onResponse }) => {
                   onChange={(e) => setResponseText(e?.target?.value)}
                   className="min-h-32"
                 />
-                
+
                 <div className="flex items-center space-x-2">
                   <Button
                     variant="default"
@@ -330,7 +331,7 @@ const FeedbackDetail = ({ feedback, onClose, onStatusUpdate, onResponse }) => {
         {activeTab === 'actions' && (
           <div className="space-y-6">
             <h3 className="text-lg font-semibold text-foreground mb-4">Quick Actions</h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Button
                 variant="outline"
@@ -342,7 +343,7 @@ const FeedbackDetail = ({ feedback, onClose, onStatusUpdate, onResponse }) => {
                   <div className="text-sm text-muted-foreground">Route to specific team</div>
                 </div>
               </Button>
-              
+
               <Button
                 variant="outline"
                 iconName="AlertTriangle"
@@ -353,7 +354,7 @@ const FeedbackDetail = ({ feedback, onClose, onStatusUpdate, onResponse }) => {
                   <div className="text-sm text-muted-foreground">Flag for urgent attention</div>
                 </div>
               </Button>
-              
+
               <Button
                 variant="outline"
                 iconName="Calendar"
@@ -364,7 +365,7 @@ const FeedbackDetail = ({ feedback, onClose, onStatusUpdate, onResponse }) => {
                   <div className="text-sm text-muted-foreground">Set reminder for later</div>
                 </div>
               </Button>
-              
+
               <Button
                 variant="outline"
                 iconName="FileText"

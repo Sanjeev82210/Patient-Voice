@@ -169,11 +169,11 @@ const FeedbackManagement = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 relative overflow-hidden">
+        <div className="min-h-screen bg-gradient-to-br from-violet-600 via-purple-500 to-pink-400 relative overflow-hidden">
             {/* Animated Background */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-                <div className="absolute w-96 h-96 bg-blue-400/30 rounded-full blur-3xl -top-48 -right-48 animate-pulse"></div>
-                <div className="absolute w-96 h-96 bg-cyan-400/30 rounded-full blur-3xl -bottom-48 -left-48 animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <div className="absolute w-96 h-96 bg-violet-400/30 rounded-full blur-3xl -top-48 -right-48 animate-pulse"></div>
+                <div className="absolute w-96 h-96 bg-pink-400/30 rounded-full blur-3xl -bottom-48 -left-48 animate-pulse" style={{ animationDelay: '1s' }}></div>
             </div>
 
             <Header />
@@ -185,11 +185,11 @@ const FeedbackManagement = () => {
                         <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-4">
-                                    <div className="p-3 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl shadow-lg">
+                                    <div className="p-3 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl shadow-lg">
                                         <Icon name="MessageSquare" size={32} className="text-white" />
                                     </div>
                                     <div>
-                                        <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                                        <h1 className="text-3xl font-bold bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">
                                             Feedback Management
                                         </h1>
                                         <p className="text-gray-600 mt-1">

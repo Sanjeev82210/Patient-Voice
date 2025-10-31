@@ -39,14 +39,14 @@ const FeedbackAnalytics = () => {
       label: 'Schedule Report',
       icon: 'Calendar',
       variant: 'outline',
-      onClick: () => console.log('Schedule report')
+      onClick: () => window.location.href = '/reports?action=schedule'
     },
     {
       id: 'create-alert',
       label: 'Create Alert',
       icon: 'Bell',
       variant: 'outline',
-      onClick: () => console.log('Create alert')
+      onClick: () => alert('Configure Alerts: Set up automated alerts for specific feedback thresholds or patterns.')
     },
     {
       id: 'refresh-data',
@@ -99,11 +99,11 @@ const FeedbackAnalytics = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-teal-600 via-emerald-500 to-green-400 relative overflow-hidden">
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute w-96 h-96 bg-blue-400/30 rounded-full blur-3xl top-0 right-0 animate-pulse"></div>
-        <div className="absolute w-96 h-96 bg-teal-300/30 rounded-full blur-3xl bottom-0 left-0 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+        <div className="absolute w-96 h-96 bg-teal-400/30 rounded-full blur-3xl top-0 right-0 animate-pulse"></div>
+        <div className="absolute w-96 h-96 bg-emerald-400/30 rounded-full blur-3xl bottom-0 left-0 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
       </div>
 
       <Header />
@@ -114,14 +114,14 @@ const FeedbackAnalytics = () => {
           <div className="animate-fade-in">
             <BreadcrumbNavigation items={breadcrumbItems} className="mb-4" />
 
-            <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg">
+            <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-teal-100 shadow-lg">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl shadow-lg">
+                  <div className="p-3 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl shadow-lg">
                     <Icon name="BarChart3" size={32} className="text-white" />
                   </div>
                   <div>
-                    <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                    <h1 className="text-3xl font-bold bg-gradient-to-r from-teal-600 to-emerald-600 bg-clip-text text-transparent">
                       Feedback Analytics
                     </h1>
                     <p className="text-gray-600 mt-1">
@@ -141,24 +141,24 @@ const FeedbackAnalytics = () => {
           {/* Summary Statistics */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {summaryStats?.map((stat, index) => (
-              <div key={index} className="card-clinical">
+              <div key={index} className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground">{stat?.label}</p>
-                    <p className="text-2xl font-bold text-foreground mt-1">{stat?.value}</p>
+                    <p className="text-sm text-gray-600">{stat?.label}</p>
+                    <p className="text-2xl font-bold text-gray-800 mt-1">{stat?.value}</p>
                     <div className="flex items-center space-x-1 mt-2">
                       <Icon
                         name={stat?.trend === 'up' ? 'TrendingUp' : 'TrendingDown'}
                         size={14}
                         className={stat?.trend === 'up' ? 'text-emerald-600' : 'text-red-600'}
                       />
-                      <span className={`text-sm ${stat?.trend === 'up' ? 'text-emerald-600' : 'text-red-600'}`}>
+                      <span className={`text-sm font-medium ${stat?.trend === 'up' ? 'text-emerald-600' : 'text-red-600'}`}>
                         {stat?.change}
                       </span>
-                      <span className="text-sm text-muted-foreground">vs last period</span>
+                      <span className="text-sm text-gray-500">vs last period</span>
                     </div>
                   </div>
-                  <div className={`w-12 h-12 rounded-lg bg-muted/50 flex items-center justify-center`}>
+                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br from-blue-50 to-cyan-50 flex items-center justify-center shadow-sm`}>
                     <Icon name={stat?.icon} size={24} className={stat?.color} />
                   </div>
                 </div>
@@ -190,22 +190,39 @@ const FeedbackAnalytics = () => {
           <StaffPerformanceMetrics key={`staff-${refreshKey}`} />
 
           {/* Additional Analytics Actions */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between p-6 bg-muted/30 rounded-lg border border-border">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between p-6 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-lg border border-cyan-200">
             <div className="flex items-center space-x-3 mb-4 lg:mb-0">
-              <Icon name="Lightbulb" size={20} className="text-amber-600" />
+              <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                <Icon name="Lightbulb" size={24} className="text-amber-600" />
+              </div>
               <div>
-                <h3 className="text-sm font-medium text-foreground">Need More Insights?</h3>
+                <h3 className="text-base font-semibold text-foreground">Need More Insights?</h3>
                 <p className="text-sm text-muted-foreground">Explore advanced analytics features and custom reporting options</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Button variant="outline" size="sm" iconName="Settings">
+              <Button
+                variant="outline"
+                size="sm"
+                iconName="Settings"
+                onClick={() => alert('Configure Alerts:\n\nSet up automated alerts for:\n• Low satisfaction scores\n• Urgent feedback\n• Specific keywords\n• Department thresholds\n• Response time delays')}
+              >
                 Configure Alerts
               </Button>
-              <Button variant="outline" size="sm" iconName="Calendar">
+              <Button
+                variant="outline"
+                size="sm"
+                iconName="Calendar"
+                onClick={() => window.location.href = '/reports?action=schedule'}
+              >
                 Schedule Reports
               </Button>
-              <Button variant="default" size="sm" iconName="Zap">
+              <Button
+                variant="default"
+                size="sm"
+                iconName="Zap"
+                onClick={() => alert('Advanced Analytics Features:\n\n• Predictive analytics\n• Custom dashboards\n• AI-powered insights\n• Trend forecasting\n• Comparative analysis\n\nComing soon!')}
+              >
                 Advanced Analytics
               </Button>
             </div>

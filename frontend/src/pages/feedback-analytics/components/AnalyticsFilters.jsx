@@ -107,14 +107,14 @@ const AnalyticsFilters = ({ onFiltersChange, className = '' }) => {
   };
 
   return (
-    <div className={`bg-card border border-border rounded-lg shadow-clinical ${className}`}>
+    <div className={`bg-white/80 backdrop-blur-sm border border-blue-100 rounded-lg shadow-lg ${className}`}>
       {/* Filter Header */}
-      <div className="flex items-center justify-between p-4 border-b border-border">
+      <div className="flex items-center justify-between p-4 border-b border-gray-200">
         <div className="flex items-center space-x-3">
-          <Icon name="Filter" size={20} className="text-muted-foreground" />
-          <h3 className="text-lg font-semibold text-foreground">Analytics Filters</h3>
+          <Icon name="Filter" size={20} className="text-gray-600" />
+          <h3 className="text-lg font-semibold text-gray-800">Analytics Filters</h3>
           {getActiveFilterCount() > 0 && (
-            <span className="bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full">
+            <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
               {getActiveFilterCount()} active
             </span>
           )}
@@ -146,7 +146,7 @@ const AnalyticsFilters = ({ onFiltersChange, className = '' }) => {
             value={filters?.dateRange}
             onChange={(value) => handleFilterChange('dateRange', value)}
           />
-          
+
           {filters?.dateRange === 'custom' && (
             <>
               <Input
@@ -176,7 +176,7 @@ const AnalyticsFilters = ({ onFiltersChange, className = '' }) => {
             searchable
             placeholder="Select departments..."
           />
-          
+
           <Select
             label="Feedback Categories"
             options={categoryOptions}
@@ -243,7 +243,7 @@ const AnalyticsFilters = ({ onFiltersChange, className = '' }) => {
             searchable
             placeholder="Select staff members..."
           />
-          
+
           <Select
             label="Sentiment Filter"
             options={sentimentOptions}

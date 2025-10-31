@@ -62,9 +62,9 @@ const ReportPreview = ({ reportConfig, onClose, onGenerate }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-card border border-border rounded-lg shadow-clinical-modal w-full max-w-6xl max-h-[90vh] overflow-hidden">
+      <div className="bg-white border border-amber-100 rounded-lg shadow-clinical-modal w-full max-w-6xl h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-border">
+        <div className="flex items-center justify-between p-6 border-b border-amber-100">
           <div>
             <h2 className="text-xl font-semibold text-foreground">{getReportTitle()}</h2>
             <p className="text-sm text-muted-foreground mt-1">
@@ -73,7 +73,7 @@ const ReportPreview = ({ reportConfig, onClose, onGenerate }) => {
           </div>
           <div className="flex items-center space-x-3">
             <Button
-              variant="outline"
+              variant="default"
               iconName="Download"
               iconPosition="left"
               onClick={onGenerate}
@@ -90,16 +90,15 @@ const ReportPreview = ({ reportConfig, onClose, onGenerate }) => {
         </div>
 
         {/* Preview Mode Tabs */}
-        <div className="flex items-center space-x-1 px-6 pt-4 border-b border-border">
+        <div className="flex items-center space-x-1 px-6 pt-4 border-b border-amber-100">
           {previewModes?.map((mode) => (
             <button
               key={mode?.id}
               onClick={() => setPreviewMode(mode?.id)}
-              className={`flex items-center space-x-2 px-4 py-2 text-sm rounded-t-md clinical-transition ${
-                previewMode === mode?.id
-                  ? 'bg-muted text-foreground border-b-2 border-primary'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
+              className={`flex items-center space-x-2 px-4 py-2 text-sm rounded-t-md clinical-transition ${previewMode === mode?.id
+                ? 'bg-amber-50 text-amber-700 border-b-2 border-amber-500'
+                : 'text-gray-500 hover:text-amber-700 hover:bg-amber-50/60'
+                }`}
             >
               <Icon name={mode?.icon} size={16} />
               <span>{mode?.label}</span>
@@ -108,7 +107,7 @@ const ReportPreview = ({ reportConfig, onClose, onGenerate }) => {
         </div>
 
         {/* Preview Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
+        <div className="flex-1 p-6 overflow-y-auto">
           {previewMode === 'summary' && (
             <div className="space-y-6">
               {/* Key Metrics */}
@@ -152,17 +151,17 @@ const ReportPreview = ({ reportConfig, onClose, onGenerate }) => {
                 <h3 className="font-semibold text-foreground mb-3">Executive Summary</h3>
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <p>
-                    Patient satisfaction scores for the reporting period show continued improvement across most departments, 
+                    Patient satisfaction scores for the reporting period show continued improvement across most departments,
                     with an overall satisfaction rating of 4.4 out of 5.0, representing a 0.2-point increase from the previous period.
                   </p>
                   <p>
-                    <strong className="text-foreground">Key Highlights:</strong> Pediatrics department achieved the highest 
-                    satisfaction score (4.8), while Emergency department shows the most significant improvement (+0.4 points). 
+                    <strong className="text-foreground">Key Highlights:</strong> Pediatrics department achieved the highest
+                    satisfaction score (4.8), while Emergency department shows the most significant improvement (+0.4 points).
                     Response rates increased by 12%, indicating improved patient engagement.
                   </p>
                   <p>
-                    <strong className="text-foreground">Areas for Improvement:</strong> Wait times remain a concern in the 
-                    Emergency department, with 23% of patients rating wait times as unsatisfactory. Targeted interventions 
+                    <strong className="text-foreground">Areas for Improvement:</strong> Wait times remain a concern in the
+                    Emergency department, with 23% of patients rating wait times as unsatisfactory. Targeted interventions
                     are recommended to address staffing during peak hours.
                   </p>
                 </div>
@@ -351,7 +350,7 @@ const ReportPreview = ({ reportConfig, onClose, onGenerate }) => {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between p-6 border-t border-border bg-muted/30">
+        <div className="flex items-center justify-between p-6 border-t border-amber-100 bg-amber-50/40">
           <div className="text-sm text-muted-foreground">
             Report generated on {new Date()?.toLocaleDateString()} • {reportConfig?.format?.toUpperCase()} format
           </div>

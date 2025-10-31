@@ -83,16 +83,16 @@ const FeedbackFilters = ({ onFiltersChange, totalCount = 0 }) => {
   const hasActiveFilters = Object.values(filters)?.some(value => value !== '');
 
   return (
-    <div className="bg-card border border-border rounded-lg p-4 mb-6">
+    <div className="bg-white/80 backdrop-blur-sm border border-blue-100 rounded-lg p-4 mb-6 shadow-lg">
       {/* Header Row */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-4">
-          <h3 className="text-lg font-semibold text-foreground">Filter Feedback</h3>
-          <span className="text-sm text-muted-foreground">
+          <h3 className="text-lg font-semibold text-gray-800">Filter Feedback</h3>
+          <span className="text-sm text-gray-600">
             {totalCount} submissions found
           </span>
         </div>
-        
+
         <div className="flex items-center space-x-2">
           {hasActiveFilters && (
             <Button
@@ -104,11 +104,12 @@ const FeedbackFilters = ({ onFiltersChange, totalCount = 0 }) => {
               Clear All
             </Button>
           )}
-          
+
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             iconName={isExpanded ? "ChevronUp" : "ChevronDown"}
+            iconPosition="right"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             {isExpanded ? 'Less' : 'More'} Filters
@@ -133,21 +134,21 @@ const FeedbackFilters = ({ onFiltersChange, totalCount = 0 }) => {
           value={filters?.department}
           onChange={(value) => handleFilterChange('department', value)}
         />
-        
+
         <Select
           label="Status"
           options={statusOptions}
           value={filters?.status}
           onChange={(value) => handleFilterChange('status', value)}
         />
-        
+
         <Select
           label="Rating"
           options={ratingOptions}
           value={filters?.rating}
           onChange={(value) => handleFilterChange('rating', value)}
         />
-        
+
         <Select
           label="Date Range"
           options={dateRangeOptions}
@@ -165,7 +166,7 @@ const FeedbackFilters = ({ onFiltersChange, totalCount = 0 }) => {
               value={filters?.sentiment}
               onChange={(value) => handleFilterChange('sentiment', value)}
             />
-            
+
             <div className="flex flex-col space-y-2">
               <label className="text-sm font-medium text-foreground">Priority Level</label>
               <div className="flex space-x-2">
@@ -185,7 +186,7 @@ const FeedbackFilters = ({ onFiltersChange, totalCount = 0 }) => {
                 </Button>
               </div>
             </div>
-            
+
             <div className="flex flex-col space-y-2">
               <label className="text-sm font-medium text-foreground">Response Required</label>
               <div className="flex space-x-2">

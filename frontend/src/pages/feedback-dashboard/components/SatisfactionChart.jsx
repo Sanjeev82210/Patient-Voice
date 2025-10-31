@@ -33,35 +33,35 @@ const SatisfactionChart = ({ className = '' }) => {
   };
 
   return (
-    <div className={`card-clinical ${className}`}>
+    <div className={`bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg ${className}`}>
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-foreground mb-2">
+        <h3 className="text-lg font-semibold text-gray-800 mb-2">
           Patient Satisfaction Trend
         </h3>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-gray-600">
           Monthly satisfaction scores over the past 10 months
         </p>
       </div>
-      
+
       <div className="w-full h-80" aria-label="Patient Satisfaction Trend Line Chart">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
-            <XAxis 
-              dataKey="month" 
+            <XAxis
+              dataKey="month"
               stroke="var(--color-muted-foreground)"
               fontSize={12}
             />
-            <YAxis 
+            <YAxis
               domain={[3.5, 5.0]}
               stroke="var(--color-muted-foreground)"
               fontSize={12}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Line 
-              type="monotone" 
-              dataKey="satisfaction" 
-              stroke="var(--color-primary)" 
+            <Line
+              type="monotone"
+              dataKey="satisfaction"
+              stroke="var(--color-primary)"
               strokeWidth={3}
               dot={{ fill: 'var(--color-primary)', strokeWidth: 2, r: 4 }}
               activeDot={{ r: 6, stroke: 'var(--color-primary)', strokeWidth: 2 }}

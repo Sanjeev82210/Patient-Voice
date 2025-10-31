@@ -1,4 +1,4 @@
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 /**
  * Feedback Service
@@ -11,6 +11,7 @@ export const feedbackService = {
      */
     async submitFeedback(feedbackData) {
         try {
+            if (!isSupabaseConfigured()) throw new Error('Supabase is not configured.');
             const { data, error } = await supabase
                 .from('feedback')
                 .insert([feedbackData])
@@ -31,13 +32,14 @@ export const feedbackService = {
      */
     async getFeedback(filters = {}) {
         try {
+            if (!isSupabaseConfigured()) return { data: [], count: 0 };
             let query = supabase
                 .from('feedback')
                 .select(`
           *,
           department:departments(id, name),
           responded_by_user:profiles!responded_by(id, full_name, email)
-        `)
+        `, { count: 'exact' })
                 .order('created_at', { ascending: false });
 
             // Apply filters
@@ -70,12 +72,12 @@ export const feedbackService = {
             }
 
             // Pagination
-            if (filters.limit) {
-                query = query.limit(filters.limit);
-            }
-
-            if (filters.offset) {
-                query = query.range(filters.offset, filters.offset + (filters.limit || 10) - 1);
+            const limit = typeof filters.limit === 'number' ? filters.limit : undefined;
+            const offset = typeof filters.offset === 'number' ? filters.offset : undefined;
+            if (typeof limit === 'number' && typeof offset === 'number') {
+                query = query.range(offset, offset + limit - 1);
+            } else if (typeof limit === 'number') {
+                query = query.limit(limit);
             }
 
             const { data, error, count } = await query;
@@ -94,6 +96,7 @@ export const feedbackService = {
      */
     async getFeedbackById(id) {
         try {
+            if (!isSupabaseConfigured()) return null;
             const { data, error } = await supabase
                 .from('feedback')
                 .select(`
@@ -124,6 +127,7 @@ export const feedbackService = {
      */
     async updateFeedback(id, updates) {
         try {
+            if (!isSupabaseConfigured()) throw new Error('Supabase is not configured.');
             const { data, error } = await supabase
                 .from('feedback')
                 .update(updates)
@@ -145,6 +149,7 @@ export const feedbackService = {
      */
     async deleteFeedback(id) {
         try {
+            if (!isSupabaseConfigured()) throw new Error('Supabase is not configured.');
             const { error } = await supabase
                 .from('feedback')
                 .delete()
@@ -164,6 +169,7 @@ export const feedbackService = {
      */
     async addResponse(feedbackId, responseData) {
         try {
+            if (!isSupabaseConfigured()) throw new Error('Supabase is not configured.');
             const { data, error } = await supabase
                 .from('feedback_responses')
                 .insert([{
@@ -188,7 +194,7 @@ export const feedbackService = {
     async getStatistics(filters = {}) {
         try {
             // Overall stats
-            const { data: totalCount } = await supabase
+            const { count: totalCount } = await supabase
                 .from('feedback')
                 .select('id', { count: 'exact', head: true });
 
@@ -238,6 +244,7 @@ export const feedbackService = {
      * Get trending feedback (real-time)
      */
     subscribeToDashboard(callback) {
+        if (!isSupabaseConfigured()) return null;
         const subscription = supabase
             .channel('feedback_changes')
             .on(
@@ -260,7 +267,7 @@ export const feedbackService = {
      * Unsubscribe from real-time updates
      */
     unsubscribe(subscription) {
-        if (subscription) {
+        if (subscription && isSupabaseConfigured()) {
             supabase.removeChannel(subscription);
         }
     },

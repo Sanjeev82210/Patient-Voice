@@ -152,15 +152,15 @@ const DepartmentComparisonChart = ({ className = '' }) => {
   };
 
   return (
-    <div className={`card-clinical ${className}`}>
+    <div className={`bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg ${className}`}>
       <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-6 space-y-4 lg:space-y-0">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center">
+          <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
             <Icon name="BarChart3" size={20} className="text-emerald-600" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-foreground">{config?.title}</h3>
-            <p className="text-sm text-muted-foreground">{config?.subtitle}</p>
+            <h3 className="text-lg font-semibold text-gray-800">{config?.title}</h3>
+            <p className="text-sm text-gray-600">{config?.subtitle}</p>
           </div>
         </div>
 
@@ -192,22 +192,22 @@ const DepartmentComparisonChart = ({ className = '' }) => {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={departmentData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
-            <XAxis 
-              dataKey="department" 
+            <XAxis
+              dataKey="department"
               stroke="var(--color-muted-foreground)"
               fontSize={12}
               angle={-45}
               textAnchor="end"
               height={80}
             />
-            <YAxis 
+            <YAxis
               domain={config?.yAxisDomain}
               stroke="var(--color-muted-foreground)"
               fontSize={12}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Bar 
-              dataKey={config?.dataKey} 
+            <Bar
+              dataKey={config?.dataKey}
               fill={config?.color}
               radius={[4, 4, 0, 0]}
             />
@@ -226,16 +226,16 @@ const DepartmentComparisonChart = ({ className = '' }) => {
             </h5>
             <div className="space-y-2">
               {departmentData?.sort((a, b) => b?.satisfaction - a?.satisfaction)?.slice(0, 3)?.map((dept, index) => (
-                  <div key={dept?.department} className="flex items-center justify-between text-sm">
-                    <div className="flex items-center space-x-2">
-                      <span className="w-5 h-5 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-xs font-medium">
-                        {index + 1}
-                      </span>
-                      <span className="text-foreground">{dept?.department}</span>
-                    </div>
-                    <span className="font-medium text-emerald-600">{dept?.satisfaction?.toFixed(1)}</span>
+                <div key={dept?.department} className="flex items-center justify-between text-sm">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-5 h-5 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-xs font-medium">
+                      {index + 1}
+                    </span>
+                    <span className="text-foreground">{dept?.department}</span>
                   </div>
-                ))}
+                  <span className="font-medium text-emerald-600">{dept?.satisfaction?.toFixed(1)}</span>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -247,16 +247,16 @@ const DepartmentComparisonChart = ({ className = '' }) => {
             </h5>
             <div className="space-y-2">
               {departmentData?.sort((a, b) => a?.satisfaction - b?.satisfaction)?.slice(0, 3)?.map((dept, index) => (
-                  <div key={dept?.department} className="flex items-center justify-between text-sm">
-                    <div className="flex items-center space-x-2">
-                      <span className="w-5 h-5 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-xs font-medium">
-                        {departmentData?.length - index}
-                      </span>
-                      <span className="text-foreground">{dept?.department}</span>
-                    </div>
-                    <span className="font-medium text-amber-600">{dept?.satisfaction?.toFixed(1)}</span>
+                <div key={dept?.department} className="flex items-center justify-between text-sm">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-5 h-5 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-xs font-medium">
+                      {departmentData?.length - index}
+                    </span>
+                    <span className="text-foreground">{dept?.department}</span>
                   </div>
-                ))}
+                  <span className="font-medium text-amber-600">{dept?.satisfaction?.toFixed(1)}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

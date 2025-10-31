@@ -1,4 +1,4 @@
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 /**
  * Authentication Service
@@ -11,6 +11,7 @@ export const authService = {
      */
     async signIn(email, password) {
         try {
+            if (!isSupabaseConfigured()) throw new Error('Supabase is not configured. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
             const { data, error } = await supabase.auth.signInWithPassword({
                 email,
                 password,
@@ -43,6 +44,7 @@ export const authService = {
      */
     async signUp(email, password, userData = {}) {
         try {
+            if (!isSupabaseConfigured()) throw new Error('Supabase is not configured. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
             const { data, error } = await supabase.auth.signUp({
                 email,
                 password,
@@ -83,6 +85,7 @@ export const authService = {
      */
     async signOut() {
         try {
+            if (!isSupabaseConfigured()) return; // nothing to do
             const { error } = await supabase.auth.signOut();
             if (error) throw error;
 
@@ -99,6 +102,7 @@ export const authService = {
      */
     async getSession() {
         try {
+            if (!isSupabaseConfigured()) return null;
             const { data, error } = await supabase.auth.getSession();
             if (error) throw error;
             return data.session;
@@ -113,6 +117,7 @@ export const authService = {
      */
     async getCurrentUser() {
         try {
+            if (!isSupabaseConfigured()) return null;
             const { data: { user }, error } = await supabase.auth.getUser();
             if (error) throw error;
 
@@ -141,6 +146,7 @@ export const authService = {
      */
     async resetPassword(email) {
         try {
+            if (!isSupabaseConfigured()) throw new Error('Supabase is not configured.');
             const { error } = await supabase.auth.resetPasswordForEmail(email, {
                 redirectTo: `${window.location.origin}/reset-password`,
             });
@@ -157,6 +163,7 @@ export const authService = {
      */
     async updatePassword(newPassword) {
         try {
+            if (!isSupabaseConfigured()) throw new Error('Supabase is not configured.');
             const { error } = await supabase.auth.updateUser({
                 password: newPassword,
             });

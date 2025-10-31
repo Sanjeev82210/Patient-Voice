@@ -7,12 +7,12 @@ import { Checkbox } from '../../../components/ui/CheckBox';
 
 const ReportBuilder = ({ onGenerateReport, onPreviewReport }) => {
   const [reportConfig, setReportConfig] = useState({
-    type: '',
-    dateRange: '',
+    type: 'satisfaction-summary',
+    dateRange: 'last-7-days',
     customStartDate: '',
     customEndDate: '',
-    departments: [],
-    metrics: [],
+    departments: ['emergency'],
+    metrics: ['overall-satisfaction'],
     format: 'pdf',
     includeCharts: true,
     includeRawData: false,
@@ -104,15 +104,15 @@ const ReportBuilder = ({ onGenerateReport, onPreviewReport }) => {
     reportConfig?.departments?.length > 0 && reportConfig?.metrics?.length > 0;
 
   return (
-    <div className="card-clinical">
+    <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-amber-100 shadow-lg">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-xl font-semibold text-foreground">Report Builder</h2>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h2 className="text-xl font-semibold text-gray-800">Report Builder</h2>
+          <p className="text-sm text-gray-600 mt-1">
             Configure and generate comprehensive patient satisfaction reports
           </p>
         </div>
-        <Icon name="FileText" size={24} className="text-primary" />
+        <Icon name="FileText" size={24} className="text-amber-600" />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left Column - Basic Configuration */}

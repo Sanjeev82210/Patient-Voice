@@ -195,9 +195,9 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg">
+    <div className="bg-gradient-to-br from-violet-400 to-purple-500 rounded-xl border-2 border-white/20 shadow-2xl overflow-hidden">
       {/* List Header */}
-      <div className="px-6 py-4 border-b border-border">
+      <div className="px-6 py-4 bg-white/10 backdrop-blur-sm border-b border-white/20">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <Checkbox
@@ -205,7 +205,7 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
               indeterminate={selectedItems?.length > 0 && selectedItems?.length < dataToUse?.length}
               onChange={handleSelectAll} />
 
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-white/90 font-medium">
               {selectedItems?.length > 0 ? `${selectedItems?.length} selected` : 'Select all'}
             </span>
           </div>
@@ -241,25 +241,25 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
 
           <div className="flex items-center space-x-2">
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
               iconName="ArrowUpDown"
-              onClick={() => handleSort('date')}>
-
+              onClick={() => handleSort('date')}
+            >
               Sort by Date
             </Button>
             <Button
-              variant="ghost"
+              variant="default"
               size="sm"
-              iconName="Filter">
-
+              iconName="Settings"
+            >
               View Options
             </Button>
           </div>
         </div>
       </div>
       {/* Feedback Items */}
-      <div className="divide-y divide-border">
+      <div className="divide-y divide-white/10 bg-gradient-to-b from-white/5 to-transparent">
         {dataToUse?.map((feedback) => {
           const priorityIcon = getPriorityIcon(feedback?.priority);
           const isSelected = selectedItems?.includes(feedback?.id);
@@ -268,7 +268,7 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
           return (
             <div
               key={feedback?.id}
-              className={`p-6 cursor-pointer clinical-transition ${isActive ? 'bg-muted border-l-4 border-l-primary' : 'hover:bg-muted/50'}`
+              className={`p-6 cursor-pointer transition-all duration-200 ${isActive ? 'bg-white/20 backdrop-blur-sm border-l-4 border-l-white' : 'hover:bg-white/10'}`
               }
               onClick={() => onSelectFeedback(feedback)}>
 
@@ -284,7 +284,7 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
 
                 {/* Patient Avatar */}
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 rounded-full overflow-hidden bg-muted">
+                  <div className="w-12 h-12 rounded-full overflow-hidden bg-white/20 border-2 border-white/30">
                     <img
                       src={feedback?.avatar}
                       alt={feedback?.avatarAlt}
@@ -302,13 +302,13 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
                     <div className="flex-1">
                       {/* Header Row */}
                       <div className="flex items-center space-x-3 mb-2">
-                        <h4 className="text-base font-semibold text-foreground">
+                        <h4 className="text-base font-bold text-white">
                           {feedback?.patientName}
                         </h4>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-white/80 font-medium">
                           {feedback?.patientId}
                         </span>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(feedback?.status)}`}>
+                        <span className={`px-2 py-1 rounded-full text-xs font-bold ${getStatusColor(feedback?.status)}`}>
                           {feedback?.status?.replace('-', ' ')}
                         </span>
                         {priorityIcon &&
@@ -322,16 +322,16 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
 
                       {/* Department and Date */}
                       <div className="flex items-center space-x-4 mb-2">
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-white/80">
                           <Icon name="Building2" size={14} className="inline mr-1" />
                           {feedback?.department}
                         </span>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-white/80">
                           <Icon name="Clock" size={14} className="inline mr-1" />
                           {formatDate(feedback?.submissionDate)}
                         </span>
                         {feedback?.responseRequired &&
-                          <span className="text-sm text-orange-600">
+                          <span className="text-sm text-orange-300 font-semibold">
                             <Icon name="MessageCircle" size={14} className="inline mr-1" />
                             Response needed
                           </span>
@@ -343,66 +343,87 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
                         <div className="flex items-center space-x-1">
                           {getRatingStars(feedback?.overallRating)}
                         </div>
-                        <span className="text-sm font-medium text-foreground">
+                        <span className="text-sm font-bold text-white">
                           {feedback?.overallRating}.0
                         </span>
-                        <span className={`text-xs px-2 py-1 rounded ${feedback?.sentiment === 'positive' ? 'bg-green-100 text-green-800' :
-                            feedback?.sentiment === 'negative' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}`
+                        <span className={`text-xs px-2 py-1 rounded-full font-bold ${feedback?.sentiment === 'positive' ? 'bg-green-500/90 text-white' :
+                          feedback?.sentiment === 'negative' ? 'bg-red-500/90 text-white' : 'bg-gray-500/90 text-white'}`
                         }>
                           {feedback?.sentiment}
                         </span>
                       </div>
 
                       {/* Summary */}
-                      <p className="text-sm text-muted-foreground line-clamp-2">
+                      <p className="text-sm text-white/80 line-clamp-2">
                         {feedback?.summary}
                       </p>
                     </div>
 
                     {/* Action Buttons */}
                     <div className="flex items-center space-x-2 ml-4">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        iconName="MessageSquare"
+                      <button
+                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
                         onClick={(e) => {
                           e?.stopPropagation();
-                          // Handle response action
-                        }} />
+                          onSelectFeedback(feedback);
+                        }}
+                        title="View details">
+                        <Icon name="Eye" size={18} />
+                      </button>
 
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        iconName="ArrowRight"
+                      <button
+                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
                         onClick={(e) => {
                           e?.stopPropagation();
-                          // Handle assign action
-                        }} />
+                          onSelectFeedback(feedback);
+                        }}
+                        title="Respond">
+                        <Icon name="MessageSquare" size={18} />
+                      </button>
 
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        iconName="MoreVertical"
+                      <button
+                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
+                        onClick={(e) => {
+                          e?.stopPropagation();
+                          onSelectFeedback(feedback);
+                        }}
+                        title="View more">
+                        <Icon name="ArrowRight" size={18} />
+                      </button>
+
+                      <button
+                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
                         onClick={(e) => {
                           e?.stopPropagation();
                           // Handle more actions
-                        }} />
+                        }}>
+                        <Icon name="MoreVertical" size={18} />
+                      </button>
 
                     </div>
                   </div>
                 </div>
               </div>
-            </div>);
-
+            </div>
+          );
         })}
       </div>
       {/* Load More */}
-      <div className="px-6 py-4 border-t border-border text-center">
-        <Button variant="outline" iconName="ChevronDown">
+      <div className="px-6 py-4 bg-white/5 border-t border-white/10 text-center">
+        <Button
+          variant="default"
+          size="md"
+          iconName="ChevronDown"
+          onClick={() => {
+            console.log('Loading more feedback...');
+            alert('Load More feature: This would fetch additional feedback entries from the database.');
+          }}
+        >
           Load More Feedback
         </Button>
       </div>
-    </div>);
+    </div>
+  );
 
 };
 

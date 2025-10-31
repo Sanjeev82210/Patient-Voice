@@ -55,7 +55,7 @@ const AnalyticsOverview = () => {
             case 'alerts':
                 return (
                     <div className="space-y-6">
-                        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg">
+                        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-rose-100 shadow-lg">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="p-2 bg-red-100 rounded-lg">
                                     <Icon name="Bell" size={24} className="text-red-600" />
@@ -70,7 +70,7 @@ const AnalyticsOverview = () => {
             case 'satisfaction':
                 return (
                     <div className="space-y-6">
-                        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg">
+                        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-rose-100 shadow-lg">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="p-2 bg-blue-100 rounded-lg">
                                     <Icon name="TrendingUp" size={24} className="text-blue-600" />
@@ -85,7 +85,7 @@ const AnalyticsOverview = () => {
             case 'actions':
                 return (
                     <div className="space-y-6">
-                        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg">
+                        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-rose-100 shadow-lg">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="p-2 bg-purple-100 rounded-lg">
                                     <Icon name="Zap" size={24} className="text-purple-600" />
@@ -100,7 +100,7 @@ const AnalyticsOverview = () => {
             case 'departments':
                 return (
                     <div className="space-y-6">
-                        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg">
+                        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-rose-100 shadow-lg">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="p-2 bg-teal-100 rounded-lg">
                                     <Icon name="Building2" size={24} className="text-teal-600" />
@@ -115,7 +115,7 @@ const AnalyticsOverview = () => {
             case 'sentiment':
                 return (
                     <div className="space-y-6">
-                        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg">
+                        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-rose-100 shadow-lg">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="p-2 bg-green-100 rounded-lg">
                                     <Icon name="Smile" size={24} className="text-green-600" />
@@ -130,7 +130,7 @@ const AnalyticsOverview = () => {
             case 'insights':
                 return (
                     <div className="space-y-6">
-                        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg">
+                        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-rose-100 shadow-lg">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="p-2 bg-orange-100 rounded-lg">
                                     <Icon name="Target" size={24} className="text-orange-600" />
@@ -150,10 +150,10 @@ const AnalyticsOverview = () => {
     return (
         <div className="min-h-screen relative overflow-hidden">
             {/* Animated gradient background */}
-            <div className="fixed inset-0 bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 -z-10">
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/40 via-transparent to-cyan-500/40 animate-gradient-shift"></div>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.3),transparent_50%)]"></div>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(6,182,212,0.3),transparent_50%)]"></div>
+            <div className="fixed inset-0 bg-gradient-to-br from-rose-600 via-pink-500 to-fuchsia-400 -z-10">
+                <div className="absolute inset-0 bg-gradient-to-tr from-rose-500/40 via-transparent to-pink-500/40 animate-gradient-shift"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(244,63,94,0.3),transparent_50%)]"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(236,72,153,0.3),transparent_50%)]"></div>
             </div>
 
             {/* Floating particles */}
@@ -161,7 +161,7 @@ const AnalyticsOverview = () => {
                 {particles.map((particle) => (
                     <div
                         key={particle.id}
-                        className="absolute rounded-full bg-gradient-to-br from-blue-300/40 to-cyan-300/40 animate-float"
+                        className="absolute rounded-full bg-gradient-to-br from-rose-300/40 to-pink-300/40 animate-float"
                         style={{
                             width: `${particle.size}px`,
                             height: `${particle.size}px`,
@@ -180,14 +180,14 @@ const AnalyticsOverview = () => {
                 <BreadcrumbNavigation items={breadcrumbItems} />
 
                 {/* Page Header */}
-                <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg">
+                <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-rose-100 shadow-lg">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                            <div className="p-3 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl shadow-lg">
+                            <div className="p-3 bg-gradient-to-br from-rose-500 to-pink-600 rounded-xl shadow-lg">
                                 <Icon name="BarChart3" size={32} className="text-white" />
                             </div>
                             <div>
-                                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent">
+                                <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
                                     Analytics Overview
                                 </h1>
                                 <p className="text-gray-600 mt-1">
@@ -219,15 +219,15 @@ const AnalyticsOverview = () => {
                 </div>
 
                 {/* Tabs Navigation */}
-                <div className="bg-white/80 backdrop-blur-sm rounded-lg border border-blue-100 shadow-lg overflow-hidden">
+                <div className="bg-white/80 backdrop-blur-sm rounded-lg border border-rose-100 shadow-lg overflow-hidden">
                     <div className="flex overflow-x-auto scrollbar-hide">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`flex items-center gap-2 px-6 py-4 font-medium transition-all duration-300 whitespace-nowrap border-b-2 ${activeTab === tab.id
-                                    ? 'border-blue-600 text-blue-600 bg-blue-50'
-                                    : 'border-transparent text-gray-600 hover:text-blue-600 hover:bg-blue-50/50'
+                                    ? 'border-rose-600 text-rose-600 bg-rose-50'
+                                    : 'border-transparent text-gray-600 hover:text-rose-600 hover:bg-rose-50/50'
                                     }`}
                             >
                                 <Icon name={tab.icon} size={20} />

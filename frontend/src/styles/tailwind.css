@@ -88,6 +88,57 @@
     --color-healthcare-background: #FAFBFC;
     /* gray-50 */
 
+    /* Section-Specific Color Palettes */
+    /* Dashboard - Blue */
+    --color-dashboard-primary: #3B82F6;
+    /* blue-500 */
+    --color-dashboard-secondary: #60A5FA;
+    /* blue-400 */
+    --color-dashboard-gradient-from: #2563EB;
+    /* blue-600 */
+    --color-dashboard-gradient-to: #06B6D4;
+    /* cyan-500 */
+
+    /* Feedback - Purple/Violet */
+    --color-feedback-primary: #8B5CF6;
+    /* violet-500 */
+    --color-feedback-secondary: #A78BFA;
+    /* violet-400 */
+    --color-feedback-gradient-from: #7C3AED;
+    /* violet-600 */
+    --color-feedback-gradient-to: #EC4899;
+    /* pink-500 */
+
+    /* Analytics - Teal/Emerald */
+    --color-analytics-primary: #14B8A6;
+    /* teal-500 */
+    --color-analytics-secondary: #2DD4BF;
+    /* teal-400 */
+    --color-analytics-gradient-from: #0D9488;
+    /* teal-600 */
+    --color-analytics-gradient-to: #10B981;
+    /* emerald-500 */
+
+    /* Overview - Indigo */
+    --color-overview-primary: #6366F1;
+    /* indigo-500 */
+    --color-overview-secondary: #818CF8;
+    /* indigo-400 */
+    --color-overview-gradient-from: #4F46E5;
+    /* indigo-600 */
+    --color-overview-gradient-to: #7C3AED;
+    /* violet-600 */
+
+    /* Reports - Orange/Amber */
+    --color-reports-primary: #F59E0B;
+    /* amber-500 */
+    --color-reports-secondary: #FBBF24;
+    /* amber-400 */
+    --color-reports-gradient-from: #D97706;
+    /* amber-600 */
+    --color-reports-gradient-to: #F97316;
+    /* orange-500 */
+
     /* Shadow Variables */
     --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.1);
     --shadow-modal: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -187,6 +238,39 @@
     50% {
       opacity: 0.7;
     }
+  }
+
+  /* Modern Button Styles */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-4 py-2 text-base font-semibold text-white bg-blue-600 rounded-xl shadow-sm hover:bg-blue-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-4 py-2 text-base font-semibold text-white bg-teal-600 rounded-xl shadow-sm hover:bg-teal-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition-all duration-200;
+  }
+
+  .btn-success {
+    @apply inline-flex items-center justify-center px-4 py-2 text-base font-semibold text-white bg-emerald-600 rounded-xl shadow-sm hover:bg-emerald-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-4 py-2 text-base font-semibold text-blue-600 bg-white border-2 border-blue-600 rounded-xl shadow-sm hover:bg-blue-50 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200;
+  }
+
+  .btn-outline-teal {
+    @apply inline-flex items-center justify-center px-4 py-2 text-base font-semibold text-teal-600 bg-white border-2 border-teal-600 rounded-xl shadow-sm hover:bg-teal-50 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition-all duration-200;
+  }
+
+  .btn-purple {
+    @apply inline-flex items-center justify-center px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-xl shadow-sm hover:bg-purple-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all duration-200;
+  }
+
+  .btn-indigo {
+    @apply inline-flex items-center justify-center px-4 py-2 text-base font-semibold text-white bg-indigo-600 rounded-xl shadow-sm hover:bg-indigo-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200;
+  }
+
+  .btn-amber {
+    @apply inline-flex items-center justify-center px-4 py-2 text-base font-semibold text-white bg-amber-500 rounded-xl shadow-sm hover:bg-amber-600 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-all duration-200;
   }
 }
 

@@ -6,6 +6,7 @@ import RatingSection from './components/RatingSection';
 import ProgressIndicator from './components/ProgressIndicator';
 import SentimentPreview from './components/SentimentPreview';
 import SubmissionConfirmation from './components/SubmissionConfirmation';
+import { analyzeCombinedSentiment } from '../../utils/sentimentAnalysis';
 
 const PatientFeedbackForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -82,26 +83,54 @@ const PatientFeedbackForm = () => {
     }
   ];
 
-  // Calculate overall sentiment based on ratings and comments
+  // Calculate overall sentiment based on ratings and comments using sentiment analysis library
   const calculateSentiment = () => {
-    const ratingValues = Object.values(ratings)?.filter(rating => rating > 0);
-    if (ratingValues?.length === 0) return 'neutral';
+    // Collect all comment texts
+    const commentTexts = [
+      comments.medicalCare,
+      comments.staffBehavior,
+      comments.facilityCleanliness,
+      comments.waitTimes,
+      comments.communication,
+      comments.overall
+    ].filter(text => text && text.trim().length > 0);
 
-    const averageRating = ratingValues?.reduce((sum, rating) => sum + rating, 0) / ratingValues?.length;
+    // If no comments, base on ratings only
+    if (commentTexts.length === 0) {
+      const ratingValues = Object.values(ratings).filter(rating => rating > 0);
+      if (ratingValues.length === 0) return { sentiment: 'neutral', sentiment_score: 0 };
 
-    // Analyze comment sentiment (simplified)
-    const commentText = Object.values(comments)?.join(' ')?.toLowerCase();
-    const positiveWords = ['excellent', 'great', 'good', 'amazing', 'wonderful', 'helpful', 'professional'];
-    const negativeWords = ['poor', 'bad', 'terrible', 'awful', 'rude', 'slow', 'dirty'];
+      const averageRating = ratingValues.reduce((sum, rating) => sum + rating, 0) / ratingValues.length;
 
-    const positiveCount = positiveWords?.filter(word => commentText?.includes(word))?.length;
-    const negativeCount = negativeWords?.filter(word => commentText?.includes(word))?.length;
+      // Convert rating to sentiment
+      if (averageRating >= 4) return { sentiment: 'positive', sentiment_score: 0.7 };
+      if (averageRating <= 2) return { sentiment: 'negative', sentiment_score: -0.7 };
+      return { sentiment: 'neutral', sentiment_score: 0 };
+    }
 
-    if (averageRating >= 4 && positiveCount > negativeCount) return 'positive';
-    if (averageRating <= 2 || negativeCount > positiveCount) return 'negative';
-    if (averageRating === 3 || (positiveCount > 0 && negativeCount > 0)) return 'mixed';
+    // Analyze combined comments using sentiment library
+    const sentimentResult = analyzeCombinedSentiment(commentTexts);
 
-    return averageRating > 3 ? 'positive' : averageRating < 3 ? 'negative' : 'neutral';
+    // Also factor in ratings
+    const ratingValues = Object.values(ratings).filter(rating => rating > 0);
+    if (ratingValues.length > 0) {
+      const averageRating = ratingValues.reduce((sum, rating) => sum + rating, 0) / ratingValues.length;
+      const ratingScore = (averageRating - 3) / 2; // Convert 1-5 scale to -1 to 1
+
+      // Combine comment sentiment and rating sentiment (60% comments, 40% ratings)
+      const combinedScore = (sentimentResult.sentiment_score * 0.6) + (ratingScore * 0.4);
+
+      let finalSentiment = 'neutral';
+      if (combinedScore >= 0.15) finalSentiment = 'positive';
+      else if (combinedScore <= -0.15) finalSentiment = 'negative';
+
+      return {
+        sentiment: finalSentiment,
+        sentiment_score: Math.round(combinedScore * 100) / 100
+      };
+    }
+
+    return sentimentResult;
   };
 
   // Validation functions
@@ -392,7 +421,10 @@ const PatientFeedbackForm = () => {
                 onBack={handleBack}
                 isSubmitting={isSubmitting}
                 formData={formData}
+                ratings={ratings}
+                comments={comments}
                 isAnonymous={isAnonymous}
+                sentiment={calculateSentiment()}
               />
             )}
 

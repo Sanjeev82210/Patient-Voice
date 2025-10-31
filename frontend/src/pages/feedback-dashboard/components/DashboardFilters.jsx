@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Button from '../../../components/ui/Button';
 import Select from '../../../components/ui/Select';
 import Icon from '../../../components/AppIcon';
@@ -11,16 +11,16 @@ const DashboardFilters = ({ onFiltersChange, className = '' }) => {
     priority: 'all'
   });
 
-  const dateRangeOptions = [
+  const dateRangeOptions = useMemo(() => ([
     { value: 'today', label: 'Today' },
     { value: 'last7days', label: 'Last 7 Days' },
     { value: 'last30days', label: 'Last 30 Days' },
     { value: 'last90days', label: 'Last 90 Days' },
     { value: 'lastyear', label: 'Last Year' },
     { value: 'custom', label: 'Custom Range' }
-  ];
+  ]), []);
 
-  const departmentOptions = [
+  const departmentOptions = useMemo(() => ([
     { value: 'all', label: 'All Departments' },
     { value: 'emergency', label: 'Emergency Department' },
     { value: 'cardiology', label: 'Cardiology' },
@@ -30,22 +30,22 @@ const DashboardFilters = ({ onFiltersChange, className = '' }) => {
     { value: 'radiology', label: 'Radiology' },
     { value: 'oncology', label: 'Oncology' },
     { value: 'orthopedics', label: 'Orthopedics' }
-  ];
+  ]), []);
 
-  const feedbackTypeOptions = [
+  const feedbackTypeOptions = useMemo(() => ([
     { value: 'all', label: 'All Types' },
     { value: 'complaint', label: 'Complaints' },
     { value: 'praise', label: 'Praise' },
     { value: 'suggestion', label: 'Suggestions' },
     { value: 'urgent', label: 'Urgent Issues' }
-  ];
+  ]), []);
 
-  const priorityOptions = [
+  const priorityOptions = useMemo(() => ([
     { value: 'all', label: 'All Priorities' },
     { value: 'high', label: 'High Priority' },
     { value: 'medium', label: 'Medium Priority' },
     { value: 'low', label: 'Low Priority' }
-  ];
+  ]), []);
 
   const handleFilterChange = (key, value) => {
     const newFilters = { ...filters, [key]: value };
@@ -71,7 +71,7 @@ const DashboardFilters = ({ onFiltersChange, className = '' }) => {
   const hasActiveFilters = Object.values(filters)?.some(value => value !== 'all' && value !== 'last30days');
 
   return (
-    <div className={`card-clinical ${className}`}>
+    <div className={`bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg ${className}`}>
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         {/* Filter Controls */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 flex-1">
@@ -121,7 +121,7 @@ const DashboardFilters = ({ onFiltersChange, className = '' }) => {
               Reset
             </Button>
           )}
-          
+
           <Button
             variant="outline"
             size="sm"
@@ -146,7 +146,7 @@ const DashboardFilters = ({ onFiltersChange, className = '' }) => {
             <span className="text-sm font-medium text-muted-foreground">
               Active Filters:
             </span>
-            
+
             {filters?.department !== 'all' && (
               <div className="flex items-center space-x-1 bg-primary/10 text-primary px-2 py-1 rounded-md text-xs">
                 <span>Department: {departmentOptions?.find(opt => opt?.value === filters?.department)?.label}</span>

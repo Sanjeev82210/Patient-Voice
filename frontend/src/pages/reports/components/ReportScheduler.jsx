@@ -149,26 +149,28 @@ const ReportScheduler = ({ onScheduleReport, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-card border border-border rounded-lg shadow-clinical-modal w-full max-w-2xl max-h-[90vh] overflow-hidden">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[9999] p-4 overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-3xl my-8 max-h-[95vh] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-border">
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-cyan-50">
           <div>
-            <h2 className="text-xl font-semibold text-foreground">Schedule Automated Report</h2>
-            <p className="text-sm text-muted-foreground mt-1">
+            <h2 className="text-2xl font-bold text-gray-900">Schedule Automated Report</h2>
+            <p className="text-sm text-gray-600 mt-1">
               Set up automatic report generation and delivery
             </p>
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            iconName="X"
+          <button
             onClick={onClose}
-          />
+            className="p-2 hover:bg-white/50 rounded-lg transition-colors"
+          >
+            <Icon name="X" size={24} className="text-gray-600" />
+          </button>
         </div>
 
-        {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
+        {/* Content - Scrollable */}
+        <div className="p-6 overflow-y-auto flex-1"
+          style={{ maxHeight: 'calc(95vh - 160px)' }}
+        >
           <div className="space-y-6">
             {/* Report Configuration */}
             <div className="space-y-4">
@@ -271,8 +273,8 @@ const ReportScheduler = ({ onScheduleReport, onClose }) => {
                       onClick={() => handleAddPredefinedRecipient(recipient?.email)}
                       disabled={scheduleConfig?.recipients?.includes(recipient?.email)}
                       className={`text-left p-3 rounded-md border clinical-transition ${scheduleConfig?.recipients?.includes(recipient?.email)
-                          ? 'border-primary bg-primary/5 text-muted-foreground cursor-not-allowed'
-                          : 'border-border hover:border-primary hover:bg-muted'
+                        ? 'border-primary bg-primary/5 text-muted-foreground cursor-not-allowed'
+                        : 'border-border hover:border-primary hover:bg-muted'
                         }`}
                     >
                       <div className="text-sm font-medium text-foreground">{recipient?.name}</div>
@@ -376,7 +378,11 @@ const ReportScheduler = ({ onScheduleReport, onClose }) => {
           </div>
 
           <div className="flex items-center space-x-3">
-            <Button variant="outline" onClick={onClose}>
+            <Button
+              variant="outline"
+              onClick={onClose}
+              className="min-w-[100px]"
+            >
               Cancel
             </Button>
             <Button
@@ -385,6 +391,7 @@ const ReportScheduler = ({ onScheduleReport, onClose }) => {
               iconPosition="left"
               onClick={handleScheduleReport}
               disabled={!isConfigValid}
+              className="min-w-[150px]"
             >
               Schedule Report
             </Button>

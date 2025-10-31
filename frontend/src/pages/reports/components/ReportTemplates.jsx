@@ -77,8 +77,8 @@ const ReportTemplates = ({ onSelectTemplate, onCreateCustom }) => {
   const categories = ['All', 'Standard', 'Performance', 'Analytics', 'Compliance', 'HR Analytics', 'Experience'];
   const [activeCategory, setActiveCategory] = useState('All');
 
-  const filteredTemplates = activeCategory === 'All' 
-    ? templates 
+  const filteredTemplates = activeCategory === 'All'
+    ? templates
     : templates?.filter(template => template?.category === activeCategory);
 
   const handleTemplateSelect = (template) => {
@@ -107,11 +107,11 @@ const ReportTemplates = ({ onSelectTemplate, onCreateCustom }) => {
   };
 
   return (
-    <div className="card-clinical">
+    <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-amber-100 shadow-lg">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-xl font-semibold text-foreground">Report Templates</h2>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h2 className="text-xl font-semibold text-gray-800">Report Templates</h2>
+          <p className="text-sm text-gray-600 mt-1">
             Choose from pre-configured templates or create a custom report
           </p>
         </div>
@@ -130,11 +130,10 @@ const ReportTemplates = ({ onSelectTemplate, onCreateCustom }) => {
           <button
             key={category}
             onClick={() => setActiveCategory(category)}
-            className={`px-3 py-1.5 text-sm rounded-md clinical-transition ${
-              activeCategory === category
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted text-muted-foreground hover:bg-muted/80'
-            }`}
+            className={`px-3 py-1.5 text-sm rounded-md clinical-transition ${activeCategory === category
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-muted text-muted-foreground hover:bg-muted/80'
+              }`}
           >
             {category}
           </button>
@@ -145,16 +144,15 @@ const ReportTemplates = ({ onSelectTemplate, onCreateCustom }) => {
         {filteredTemplates?.map((template) => (
           <div
             key={template?.id}
-            className={`border border-border rounded-lg p-4 clinical-hover cursor-pointer clinical-transition ${
-              selectedTemplate === template?.id ? 'ring-2 ring-primary border-primary' : ''
-            }`}
+            className={`bg-white border border-gray-200 rounded-lg p-4 hover:border-amber-300 hover:shadow-md cursor-pointer clinical-transition relative ${selectedTemplate === template?.id ? 'ring-2 ring-amber-500 border-amber-500' : ''
+              }`}
             onClick={() => handleTemplateSelect(template)}
           >
             {/* Template Header */}
             <div className="flex items-start justify-between mb-3">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <Icon name={template?.icon} size={20} className="text-primary" />
+                <div className="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center">
+                  <Icon name={template?.icon} size={20} className="text-amber-600" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="font-medium text-foreground text-sm leading-tight">
@@ -211,7 +209,7 @@ const ReportTemplates = ({ onSelectTemplate, onCreateCustom }) => {
 
             {/* Selection Indicator */}
             {selectedTemplate === template?.id && (
-              <div className="absolute top-2 right-2 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+              <div className="absolute top-2 right-2 w-6 h-6 bg-amber-500 rounded-full flex items-center justify-center">
                 <Icon name="Check" size={14} color="white" />
               </div>
             )}

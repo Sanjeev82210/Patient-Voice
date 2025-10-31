@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 import { Checkbox } from '../../../components/ui/CheckBox';
+import { getSentimentColor, getSentimentIcon, getSentimentLabel } from '../../../utils/sentimentAnalysis';
 
 const SubmissionConfirmation = ({
   onSubmit,
   onBack,
   isSubmitting = false,
   formData = {},
-  isAnonymous = false
+  ratings = {},
+  comments = {},
+  isAnonymous = false,
+  sentiment = { sentiment: 'neutral', sentiment_score: 0 }
 }) => {
   const [followUpPreferences, setFollowUpPreferences] = useState({
     emailUpdates: false,
@@ -21,10 +25,21 @@ const SubmissionConfirmation = ({
   const handleSubmit = () => {
     if (!agreedToTerms) return;
 
+    // Calculate overall rating
+    const ratingValues = Object.values(ratings).filter(r => r > 0);
+    const overallRating = ratingValues.length > 0
+      ? ratingValues.reduce((sum, r) => sum + r, 0) / ratingValues.length
+      : 0;
+
     const submissionData = {
       ...formData,
+      ratings,
+      comments,
+      overall_rating: Math.round(overallRating * 10) / 10,
+      sentiment: sentiment.sentiment,
+      sentiment_score: sentiment.sentiment_score,
       followUpPreferences: isAnonymous ? {} : followUpPreferences,
-      submittedAt: new Date()?.toISOString(),
+      submittedAt: new Date().toISOString(),
       isAnonymous
     };
 
@@ -77,6 +92,21 @@ const SubmissionConfirmation = ({
             <span className="text-muted-foreground">Visit Type:</span>
             <div className="font-medium text-foreground">
               {formData?.visitType || 'Not specified'}
+            </div>
+          </div>
+        </div>
+
+        {/* Sentiment Analysis Result */}
+        <div className="mt-4 pt-4 border-t border-border">
+          <span className="text-muted-foreground text-sm">Overall Sentiment:</span>
+          <div className={`flex items-center gap-2 mt-2 px-3 py-2 rounded-lg ${getSentimentColor(sentiment.sentiment)}`}>
+            <Icon name={getSentimentIcon(sentiment.sentiment)} size={20} />
+            <div>
+              <div className="font-semibold">{getSentimentLabel(sentiment.sentiment)}</div>
+              <div className="text-xs opacity-75">
+                Score: {sentiment.sentiment_score.toFixed(2)}
+                {sentiment.sentiment_score > 0 ? ' (Positive)' : sentiment.sentiment_score < 0 ? ' (Negative)' : ' (Neutral)'}
+              </div>
             </div>
           </div>
         </div>
