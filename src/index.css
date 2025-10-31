@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    * {
+        @apply border-gray-200;
+    }
+
+    body {
+        @apply bg-clinical-background text-text-primary font-sans;
+        margin: 0;
+        padding: 0;
+    }
+}
