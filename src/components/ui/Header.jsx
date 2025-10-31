@@ -57,20 +57,20 @@ const Header = ({ className = '' }) => {
   };
 
   return (
-    <header className={`nav-healthcare fixed top-0 left-0 right-0 z-50 h-16 ${className}`}>
+    <header className={`backdrop-blur-lg bg-white/80 border-b border-gray-200/50 sticky top-0 z-50 h-16 shadow-lg ${className}`}>
       <div className="flex items-center justify-between h-full px-6">
         {/* Logo Section */}
         <div className="flex items-center space-x-8">
-          <div 
-            className="flex items-center space-x-3 cursor-pointer"
+          <div
+            className="flex items-center space-x-3 cursor-pointer group"
             onClick={() => handleNavigation('/feedback-dashboard')}
           >
-            <div className="flex items-center justify-center w-10 h-10 bg-primary rounded-lg">
+            <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
               <Icon name="Heart" size={24} color="white" />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-semibold text-foreground">PatientVoice</span>
-              <span className="text-xs text-muted-foreground hidden sm:block">Healthcare Feedback</span>
+              <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">PatientVoice</span>
+              <span className="text-xs text-gray-500 hidden sm:block font-medium">Healthcare Feedback</span>
             </div>
           </div>
 
@@ -80,19 +80,18 @@ const Header = ({ className = '' }) => {
               <button
                 key={item?.path}
                 onClick={() => handleNavigation(item?.path)}
-                className={`nav-item-healthcare relative ${
-                  currentPath === item?.path ? 'nav-item-active' : ''
-                }`}
+                className={`relative px-4 py-2 rounded-xl font-medium transition-all duration-300 flex items-center space-x-2 ${currentPath === item?.path
+                  ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg'
+                  : 'text-gray-600 hover:bg-gray-100'
+                  }`}
               >
-                <div className="flex items-center space-x-2">
-                  <Icon name={item?.icon} size={18} />
-                  <span>{item?.label}</span>
-                  {item?.badge && (
-                    <span className="alert-badge pulse-ambient">
-                      {item?.badge}
-                    </span>
-                  )}
-                </div>
+                <Icon name={item?.icon} size={18} />
+                <span>{item?.label}</span>
+                {item?.badge && (
+                  <span className="alert-badge pulse-ambient">
+                    {item?.badge}
+                  </span>
+                )}
               </button>
             ))}
           </nav>
@@ -110,15 +109,15 @@ const Header = ({ className = '' }) => {
             >
               More
             </Button>
-            
+
             {isProfileOpen && (
-              <div className="absolute right-0 top-full mt-2 w-48 bg-popover border border-border rounded-md shadow-clinical-modal z-60 animate-fade-in">
+              <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-2xl z-[100] animate-fade-in">
                 <div className="py-1">
                   {moreItems?.map((item) => (
                     <button
                       key={item?.path}
                       onClick={() => handleNavigation(item?.path)}
-                      className="w-full px-4 py-2 text-left text-sm text-foreground hover:bg-muted flex items-center space-x-2 clinical-transition"
+                      className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-blue-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1"
                     >
                       <Icon name={item?.icon} size={16} />
                       <span>{item?.label}</span>
@@ -158,29 +157,29 @@ const Header = ({ className = '' }) => {
             </button>
 
             {isProfileOpen && (
-              <div className="absolute right-0 top-full mt-2 w-56 bg-popover border border-border rounded-md shadow-clinical-modal z-60 animate-fade-in">
-                <div className="px-4 py-3 border-b border-border">
-                  <div className="text-sm font-medium text-foreground">Dr. Sarah Johnson</div>
-                  <div className="text-xs text-muted-foreground">sarah.johnson@hospital.com</div>
-                  <div className="text-xs text-muted-foreground mt-1">Quality Manager • Cardiology</div>
+              <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-gray-200 rounded-xl shadow-2xl z-[100] animate-fade-in">
+                <div className="px-4 py-3 border-b border-gray-200">
+                  <div className="text-sm font-medium text-gray-900">Dr. Sarah Johnson</div>
+                  <div className="text-xs text-gray-500">sarah.johnson@hospital.com</div>
+                  <div className="text-xs text-gray-500 mt-1">Quality Manager • Cardiology</div>
                 </div>
                 <div className="py-1">
-                  <button className="w-full px-4 py-2 text-left text-sm text-foreground hover:bg-muted flex items-center space-x-2 clinical-transition">
+                  <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-blue-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1">
                     <Icon name="User" size={16} />
                     <span>Profile Settings</span>
                   </button>
-                  <button className="w-full px-4 py-2 text-left text-sm text-foreground hover:bg-muted flex items-center space-x-2 clinical-transition">
+                  <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-blue-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1">
                     <Icon name="Settings" size={16} />
                     <span>Preferences</span>
                   </button>
-                  <button className="w-full px-4 py-2 text-left text-sm text-foreground hover:bg-muted flex items-center space-x-2 clinical-transition">
+                  <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-blue-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1">
                     <Icon name="HelpCircle" size={16} />
                     <span>Help & Support</span>
                   </button>
-                  <div className="border-t border-border my-1"></div>
-                  <button 
+                  <div className="border-t border-gray-200 my-1"></div>
+                  <button
                     onClick={handleLogout}
-                    className="w-full px-4 py-2 text-left text-sm text-error hover:bg-muted flex items-center space-x-2 clinical-transition"
+                    className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1"
                   >
                     <Icon name="LogOut" size={16} />
                     <span>Sign Out</span>
@@ -201,46 +200,47 @@ const Header = ({ className = '' }) => {
         </div>
       </div>
       {/* Mobile Navigation Menu */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden bg-card border-t border-border shadow-clinical-modal animate-slide-in">
-          <div className="px-4 py-3 space-y-1">
-            {navigationItems?.map((item) => (
-              <button
-                key={item?.path}
-                onClick={() => handleNavigation(item?.path)}
-                className={`w-full flex items-center justify-between p-3 rounded-md text-left clinical-transition ${
-                  currentPath === item?.path 
-                    ? 'bg-muted text-primary' :'text-foreground hover:bg-muted'
-                }`}
-              >
-                <div className="flex items-center space-x-3">
+      {
+        isMobileMenuOpen && (
+          <div className="lg:hidden bg-card border-t border-border shadow-clinical-modal animate-slide-in">
+            <div className="px-4 py-3 space-y-1">
+              {navigationItems?.map((item) => (
+                <button
+                  key={item?.path}
+                  onClick={() => handleNavigation(item?.path)}
+                  className={`w-full flex items-center justify-between p-3 rounded-md text-left clinical-transition ${currentPath === item?.path
+                    ? 'bg-muted text-primary' : 'text-foreground hover:bg-muted'
+                    }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <Icon name={item?.icon} size={20} />
+                    <span className="font-medium">{item?.label}</span>
+                  </div>
+                  {item?.badge && (
+                    <span className="alert-badge">
+                      {item?.badge}
+                    </span>
+                  )}
+                </button>
+              ))}
+
+              <div className="border-t border-border my-2"></div>
+
+              {moreItems?.map((item) => (
+                <button
+                  key={item?.path}
+                  onClick={() => handleNavigation(item?.path)}
+                  className="w-full flex items-center space-x-3 p-3 rounded-md text-left text-foreground hover:bg-muted clinical-transition"
+                >
                   <Icon name={item?.icon} size={20} />
                   <span className="font-medium">{item?.label}</span>
-                </div>
-                {item?.badge && (
-                  <span className="alert-badge">
-                    {item?.badge}
-                  </span>
-                )}
-              </button>
-            ))}
-            
-            <div className="border-t border-border my-2"></div>
-            
-            {moreItems?.map((item) => (
-              <button
-                key={item?.path}
-                onClick={() => handleNavigation(item?.path)}
-                className="w-full flex items-center space-x-3 p-3 rounded-md text-left text-foreground hover:bg-muted clinical-transition"
-              >
-                <Icon name={item?.icon} size={20} />
-                <span className="font-medium">{item?.label}</span>
-              </button>
-            ))}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-    </header>
+        )
+      }
+    </header >
   );
 };
 
