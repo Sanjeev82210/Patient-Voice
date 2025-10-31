@@ -12,7 +12,7 @@ const PatientFeedbackForm = () => {
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     // Demographics
     fullName: '',
@@ -86,21 +86,21 @@ const PatientFeedbackForm = () => {
   const calculateSentiment = () => {
     const ratingValues = Object.values(ratings)?.filter(rating => rating > 0);
     if (ratingValues?.length === 0) return 'neutral';
-    
+
     const averageRating = ratingValues?.reduce((sum, rating) => sum + rating, 0) / ratingValues?.length;
-    
+
     // Analyze comment sentiment (simplified)
     const commentText = Object.values(comments)?.join(' ')?.toLowerCase();
     const positiveWords = ['excellent', 'great', 'good', 'amazing', 'wonderful', 'helpful', 'professional'];
     const negativeWords = ['poor', 'bad', 'terrible', 'awful', 'rude', 'slow', 'dirty'];
-    
+
     const positiveCount = positiveWords?.filter(word => commentText?.includes(word))?.length;
     const negativeCount = negativeWords?.filter(word => commentText?.includes(word))?.length;
-    
+
     if (averageRating >= 4 && positiveCount > negativeCount) return 'positive';
     if (averageRating <= 2 || negativeCount > positiveCount) return 'negative';
     if (averageRating === 3 || (positiveCount > 0 && negativeCount > 0)) return 'mixed';
-    
+
     return averageRating > 3 ? 'positive' : averageRating < 3 ? 'negative' : 'neutral';
   };
 
@@ -136,29 +136,29 @@ const PatientFeedbackForm = () => {
   // Update completed sections
   useEffect(() => {
     const completed = [];
-    
+
     // Step 1: Demographics
     if (formData?.ageRange && formData?.visitType && formData?.department && formData?.visitDate) {
       if (isAnonymous || (formData?.fullName && formData?.email)) {
         completed?.push(1);
       }
     }
-    
+
     // Step 2: Ratings
     const requiredRatings = ratingCategories?.filter(cat => cat?.required);
     const hasRequiredRatings = requiredRatings?.every(cat => ratings?.[cat?.key] > 0);
     if (hasRequiredRatings) {
       completed?.push(2);
     }
-    
+
     // Step 3: Additional feedback (always considered complete)
     completed?.push(3);
-    
+
     // Step 4: Review (complete when on this step)
     if (currentStep >= 4) {
       completed?.push(4);
     }
-    
+
     setCompletedSections(completed);
   }, [formData, ratings, isAnonymous, currentStep]);
 
@@ -196,11 +196,11 @@ const PatientFeedbackForm = () => {
 
   const handleSubmit = async (submissionData) => {
     setIsSubmitting(true);
-    
+
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       console.log('Feedback submitted:', submissionData);
       setShowSuccessMessage(true);
     } catch (error) {
@@ -219,15 +219,15 @@ const PatientFeedbackForm = () => {
             <div className="w-20 h-20 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <Icon name="CheckCircle" size={40} className="text-success" />
             </div>
-            
+
             <h1 className="text-3xl font-bold text-foreground mb-4">
               Thank You for Your Feedback!
             </h1>
-            
+
             <p className="text-lg text-muted-foreground mb-6">
               Your feedback has been successfully submitted and will help us improve our healthcare services.
             </p>
-            
+
             <div className="bg-success/10 border border-success/20 rounded-lg p-4 mb-6">
               <h3 className="font-medium text-success mb-2">Confirmation Details</h3>
               <p className="text-sm text-success/80">
@@ -235,7 +235,7 @@ const PatientFeedbackForm = () => {
                 Submitted: {new Date()?.toLocaleDateString()} at {new Date()?.toLocaleTimeString()}
               </p>
             </div>
-            
+
             <div className="space-y-3">
               <Button
                 variant="default"
@@ -245,7 +245,7 @@ const PatientFeedbackForm = () => {
               >
                 Submit Another Feedback
               </Button>
-              
+
               <Button
                 variant="outline"
                 onClick={() => window.location.href = '/feedback-dashboard'}
@@ -262,14 +262,20 @@ const PatientFeedbackForm = () => {
   }
 
   return (
-    <div className="min-h-screen bg-clinical-background pt-20 pb-8">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 pt-20 pb-8 relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+        <div className="absolute w-96 h-96 bg-orange-200/20 rounded-full blur-3xl top-0 left-1/4 animate-pulse"></div>
+        <div className="absolute w-96 h-96 bg-amber-200/20 rounded-full blur-3xl bottom-0 right-1/4 animate-pulse" style={{ animationDelay: '1s' }}></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 relative" style={{ zIndex: 1 }}>
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">
+        <div className="text-center mb-8 animate-fade-in">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent mb-2">
             Patient Feedback Form
           </h1>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg text-gray-600">
             Your voice matters. Help us improve your healthcare experience.
           </p>
         </div>
@@ -284,7 +290,7 @@ const PatientFeedbackForm = () => {
                 completedSections={completedSections}
                 estimatedTimeRemaining={Math.max(1, 8 - (completedSections?.length * 2))}
               />
-              
+
               {/* Sentiment Preview - Show after step 2 */}
               {currentStep >= 2 && (
                 <div className="mt-6">

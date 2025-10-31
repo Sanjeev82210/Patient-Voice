@@ -169,16 +169,27 @@ const FeedbackManagement = () => {
     }
 
     return (
-        <div className="min-h-screen bg-background">
-            <Header />
-            <div className="pt-16">
+        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 relative overflow-hidden">
+            {/* Animated Background */}
+            <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+                <div className="absolute w-96 h-96 bg-purple-200/20 rounded-full blur-3xl -top-48 -right-48 animate-pulse"></div>
+                <div className="absolute w-96 h-96 bg-pink-200/20 rounded-full blur-3xl -bottom-48 -left-48 animate-pulse" style={{ animationDelay: '1s' }}></div>
+            </div>
+
+            <div className="relative" style={{ zIndex: 1 }}>
+                <Header />
+            </div>
+
+            <div className="pt-16 relative" style={{ zIndex: 1 }}>
                 <div className="px-6 py-8">
                     {/* Page Header */}
-                    <div className="mb-8">
+                    <div className="mb-8 animate-fade-in">
                         <div className="flex items-center justify-between">
                             <div>
-                                <h1 className="text-3xl font-bold text-foreground mb-2">Feedback Management</h1>
-                                <p className="text-muted-foreground">
+                                <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+                                    Feedback Management
+                                </h1>
+                                <p className="text-gray-600">
                                     Review, categorize, and respond to patient feedback submissions
                                 </p>
                             </div>

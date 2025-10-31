@@ -32,6 +32,77 @@ const FeedbackDashboard = () => {
     }
   }, [isLiveMode]);
 
+  // Create animated particles background
+  useEffect(() => {
+    const canvas = document.getElementById('dashboard-particles-canvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const setCanvasSize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    setCanvasSize();
+    window.addEventListener('resize', setCanvasSize);
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.speedY = (Math.random() - 0.5) * 0.3;
+        this.color = `rgba(59, 130, 246, ${Math.random() * 0.1})`;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x > canvas.width) this.x = 0;
+        if (this.x < 0) this.x = canvas.width;
+        if (this.y > canvas.height) this.y = 0;
+        if (this.y < 0) this.y = canvas.height;
+      }
+
+      draw() {
+        if (!ctx) return;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    const particles = [];
+    const particleCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 20000));
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    const animate = () => {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (const particle of particles) {
+        particle.update();
+        particle.draw();
+      }
+
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', setCanvasSize);
+    };
+  }, []);
+
   const breadcrumbItems = [
     {
       label: 'Dashboard',
@@ -96,20 +167,37 @@ const FeedbackDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-clinical-background">
-      <Header />
-      <main className="pt-16">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 relative overflow-hidden">
+      {/* Animated Particles Canvas */}
+      <canvas
+        id="dashboard-particles-canvas"
+        className="fixed inset-0 pointer-events-none"
+        style={{ zIndex: 0 }}
+      />
+
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+        <div className="absolute w-96 h-96 bg-blue-200/20 rounded-full blur-3xl -top-48 -left-48 animate-pulse"></div>
+        <div className="absolute w-96 h-96 bg-cyan-200/20 rounded-full blur-3xl -bottom-48 -right-48 animate-pulse"></div>
+        <div className="absolute w-64 h-64 bg-teal-200/20 rounded-full blur-3xl top-1/2 left-1/2 animate-pulse" style={{ animationDelay: '1s' }}></div>
+      </div>
+
+      <div className="relative" style={{ zIndex: 1 }}>
+        <Header />
+      </div>
+
+      <main className="pt-16 relative" style={{ zIndex: 1 }}>
         <div className="max-w-7xl mx-auto px-6 py-8">
           {/* Page Header */}
           <div className="mb-8">
             <BreadcrumbNavigation items={breadcrumbItems} className="mb-4" />
-            
+
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-              <div>
-                <h1 className="text-3xl font-bold text-foreground mb-2">
+              <div className="animate-fade-in">
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-2">
                   Feedback Dashboard
                 </h1>
-                <p className="text-muted-foreground">
+                <p className="text-gray-600">
                   Real-time overview of patient feedback and satisfaction metrics
                 </p>
               </div>
@@ -119,10 +207,9 @@ const FeedbackDashboard = () => {
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={toggleLiveMode}
-                    className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm clinical-transition ${
-                      isLiveMode 
-                        ? 'bg-success/10 text-success border border-success/20' :'bg-muted text-muted-foreground border border-border'
-                    }`}
+                    className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm clinical-transition ${isLiveMode
+                        ? 'bg-success/10 text-success border border-success/20' : 'bg-muted text-muted-foreground border border-border'
+                      }`}
                   >
                     <div className={`w-2 h-2 rounded-full ${isLiveMode ? 'bg-success pulse-ambient' : 'bg-muted-foreground'}`} />
                     <span>{isLiveMode ? 'Live' : 'Paused'}</span>
@@ -148,7 +235,7 @@ const FeedbackDashboard = () => {
           </div>
 
           {/* Dashboard Filters */}
-          <DashboardFilters 
+          <DashboardFilters
             onFiltersChange={handleFiltersChange}
             className="mb-8"
           />
@@ -186,7 +273,7 @@ const FeedbackDashboard = () => {
           {/* Bottom Section - Sentiment Analysis */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <SentimentAnalysis />
-            
+
             {/* Additional Insights Panel */}
             <div className="card-clinical">
               <div className="mb-6">

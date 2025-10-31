@@ -99,25 +99,36 @@ const FeedbackAnalytics = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <main className="pt-16">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+        <div className="absolute w-96 h-96 bg-emerald-200/20 rounded-full blur-3xl top-0 right-0 animate-pulse"></div>
+        <div className="absolute w-96 h-96 bg-teal-200/20 rounded-full blur-3xl bottom-0 left-0 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+      </div>
+
+      <div className="relative" style={{ zIndex: 1 }}>
+        <Header />
+      </div>
+
+      <main className="pt-16 relative" style={{ zIndex: 1 }}>
         <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
           {/* Page Header */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between space-y-4 lg:space-y-0">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between space-y-4 lg:space-y-0 animate-fade-in">
             <div>
               <BreadcrumbNavigation items={breadcrumbItems} className="mb-2" />
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <Icon name="BarChart3" size={24} className="text-primary" />
+                <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center shadow-lg">
+                  <Icon name="BarChart3" size={24} className="text-white" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-foreground">Feedback Analytics</h1>
-                  <p className="text-muted-foreground">Advanced insights and reporting for patient satisfaction data</p>
+                  <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                    Feedback Analytics
+                  </h1>
+                  <p className="text-gray-600">Advanced insights and reporting for patient satisfaction data</p>
                 </div>
               </div>
             </div>
-            <QuickActionToolbar 
+            <QuickActionToolbar
               actions={quickActions}
               variant="horizontal"
               showLabels={true}
@@ -133,10 +144,10 @@ const FeedbackAnalytics = () => {
                     <p className="text-sm text-muted-foreground">{stat?.label}</p>
                     <p className="text-2xl font-bold text-foreground mt-1">{stat?.value}</p>
                     <div className="flex items-center space-x-1 mt-2">
-                      <Icon 
-                        name={stat?.trend === 'up' ? 'TrendingUp' : 'TrendingDown'} 
-                        size={14} 
-                        className={stat?.trend === 'up' ? 'text-emerald-600' : 'text-red-600'} 
+                      <Icon
+                        name={stat?.trend === 'up' ? 'TrendingUp' : 'TrendingDown'}
+                        size={14}
+                        className={stat?.trend === 'up' ? 'text-emerald-600' : 'text-red-600'}
                       />
                       <span className={`text-sm ${stat?.trend === 'up' ? 'text-emerald-600' : 'text-red-600'}`}>
                         {stat?.change}
@@ -199,7 +210,7 @@ const FeedbackAnalytics = () => {
         </div>
       </main>
       {/* Export Modal */}
-      <ExportReportModal 
+      <ExportReportModal
         isOpen={isExportModalOpen}
         onClose={() => setIsExportModalOpen(false)}
       />
