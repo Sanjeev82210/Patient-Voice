@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Core Colors */
+    --color-background: #FAFBFC;
+    /* gray-50 */
+    --color-foreground: #1E293B;
+    /* slate-800 */
+    --color-border: #E2E8F0;
+    /* slate-200 */
+    --color-input: #FFFFFF;
+    /* white */
+    --color-ring: #2563EB;
+    /* blue-600 */
+
+    /* Card Colors */
+    --color-card: #FFFFFF;
+    /* white */
+    --color-card-foreground: #1E293B;
+    /* slate-800 */
+
+    /* Popover Colors */
+    --color-popover: #FFFFFF;
+    /* white */
+    --color-popover-foreground: #1E293B;
+    /* slate-800 */
+
+    /* Muted Colors */
+    --color-muted: #F1F5F9;
+    /* slate-100 */
+    --color-muted-foreground: #64748B;
+    /* slate-500 */
+
+    /* Primary Colors */
+    --color-primary: #2563EB;
+    /* blue-600 */
+    --color-primary-foreground: #FFFFFF;
+    /* white */
+
+    /* Secondary Colors */
+    --color-secondary: #64748B;
+    /* slate-500 */
+    --color-secondary-foreground: #FFFFFF;
+    /* white */
+
+    /* Accent Colors */
+    --color-accent: #059669;
+    /* emerald-600 */
+    --color-accent-foreground: #FFFFFF;
+    /* white */
+
+    /* Success Colors */
+    --color-success: #10B981;
+    /* emerald-500 */
+    --color-success-foreground: #FFFFFF;
+    /* white */
+
+    /* Warning Colors */
+    --color-warning: #F59E0B;
+    /* amber-500 */
+    --color-warning-foreground: #FFFFFF;
+    /* white */
+
+    /* Error/Destructive Colors */
+    --color-error: #DC2626;
+    /* red-600 */
+    --color-error-foreground: #FFFFFF;
+    /* white */
+    --color-destructive: #DC2626;
+    /* red-600 */
+    --color-destructive-foreground: #FFFFFF;
+    /* white */
+
+    /* Healthcare Specific Colors */
+    --color-healthcare-trust: #2563EB;
+    /* blue-600 */
+    --color-healthcare-wellness: #059669;
+    /* emerald-600 */
+    --color-healthcare-neutral: #64748B;
+    /* slate-500 */
+    --color-healthcare-surface: #FFFFFF;
+    /* white */
+    --color-healthcare-background: #FAFBFC;
+    /* gray-50 */
+
+    /* Shadow Variables */
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-modal: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-elevation: 0 2px 4px rgba(0, 0, 0, 0.08);
+
+    /* Animation Variables */
+    --animation-duration: 200ms;
+    --animation-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    @apply bg-clinical-background text-text-primary font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Healthcare-specific base styles */
+  .healthcare-surface {
+    @apply bg-clinical-surface border shadow-sm;
+    border-color: var(--color-border);
+  }
+
+  .healthcare-text-primary {
+    @apply text-text-primary;
+  }
+
+  .healthcare-text-secondary {
+    @apply text-text-secondary;
+  }
+
+  /* Clinical animation classes */
+  .clinical-transition {
+    transition: all var(--animation-duration) var(--animation-timing);
+  }
+
+  .clinical-hover {
+    @apply clinical-transition hover:shadow-md;
+  }
+
+  /* Accessibility enhancements */
+  .focus-clinical {
+    @apply focus:outline-none focus:ring-2 focus:ring-clinical-primary focus:ring-offset-2;
+  }
+}
+
+@layer components {
+
+  /* Healthcare navigation components */
+  .nav-healthcare {
+    @apply bg-clinical-surface border-b shadow-sm;
+    border-color: var(--color-border);
+  }
+
+  .nav-item-healthcare {
+    @apply px-4 py-2 text-sm font-medium text-text-secondary hover:text-text-primary clinical-transition focus-clinical rounded-md;
+  }
+
+  .nav-item-active {
+    @apply text-clinical-primary bg-clinical-background;
+  }
+
+  /* Clinical card components */
+  .card-clinical {
+    @apply healthcare-surface rounded-lg p-6 clinical-hover;
+  }
+
+  /* Healthcare form components */
+  .form-clinical {
+    @apply space-y-4;
+  }
+
+  .input-clinical {
+    @apply w-full px-3 py-2 border rounded-md bg-white text-text-primary placeholder:text-text-secondary focus-clinical;
+    border-color: var(--color-border);
+  }
+
+  /* Alert badge for notifications */
+  .alert-badge {
+    @apply inline-flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-clinical-error rounded-full;
+  }
+
+  /* Pulse animation for ambient feedback */
+  .pulse-ambient {
+    animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse-soft {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.7;
+    }
+  }
+}
+
+@layer utilities {
+
+  /* Healthcare spacing utilities */
+  .spacing-clinical {
+    @apply space-y-4;
+  }
+
+  /* Text utilities for healthcare */
+  .text-clinical-primary {
+    color: var(--color-foreground);
+  }
+
+  .text-clinical-secondary {
+    color: var(--color-muted-foreground);
+  }
+
+  /* Background utilities */
+  .bg-clinical-surface {
+    background-color: var(--color-card);
+  }
+
+  .bg-clinical-background {
+    background-color: var(--color-background);
+  }
+
+  /* Shadow utilities */
+  .shadow-clinical {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-clinical-modal {
+    box-shadow: var(--shadow-modal);
+  }
+}
