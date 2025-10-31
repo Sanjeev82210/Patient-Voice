@@ -35,7 +35,7 @@ const Select = React.forwardRef(({
     const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
 
     // Generate unique ID if not provided
-    const selectId = id || `select-${Math.random()?.toString(36)?.substr(2, 9)}`;
+    const selectId = id || `select-${Math.random()?.toString(36)?.substring(2, 11)}`;
 
     // Handlers
     const updatePosition = () => {
