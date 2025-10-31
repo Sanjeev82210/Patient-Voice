@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Sun, Moon, Github, Twitter, Linkedin } from 'lucide-react';
 import LoginHeader from './components/LoginHeader';
 import LoginForm from './components/LoginForm';
 import SecurityBadges from './components/SecurityBadges';
 import ForgotPasswordLink from './components/ForgotPasswordLink';
 import LoginErrorAlert from './components/LoginErrorAlert';
+import { authService } from '../../services/authService';
+import { isSupabaseConfigured } from '../../lib/supabase';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [useSupabase, setUseSupabase] = useState(false);
 
-  // Mock credentials for demo
+  // Mock credentials for demo (fallback when Supabase not configured)
   const mockCredentials = [
     { email: 'admin@hospital.com', password: 'admin123', role: 'Administrator' },
     { email: 'doctor@hospital.com', password: 'doctor123', role: 'Doctor' },
@@ -20,6 +25,14 @@ const LoginPage = () => {
   ];
 
   useEffect(() => {
+    // Check if Supabase is configured
+    const supabaseConfigured = isSupabaseConfigured();
+    setUseSupabase(supabaseConfigured);
+
+    if (!supabaseConfigured) {
+      console.warn('⚠️ Supabase not configured - using mock authentication. See SUPABASE_SETUP.md for setup instructions.');
+    }
+
     // Clear any existing session data
     localStorage.removeItem('userSession');
     document.title = 'PatientVoice - Healthcare Login';
@@ -110,45 +123,86 @@ const LoginPage = () => {
 
     try {
       // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-      // Validate credentials
-      const user = mockCredentials?.find(
-        cred => cred?.email === formData?.email && cred?.password === formData?.password
-      );
+      if (useSupabase) {
+        // Use Supabase authentication
+        const { user, session, profile } = await authService.signIn(
+          formData?.email,
+          formData?.password
+        );
 
-      if (!user) {
-        throw new Error('Invalid email or password. Please check your credentials and try again.');
+        // Create session data
+        const sessionData = {
+          user: {
+            id: user.id,
+            email: user.email,
+            role: profile.role,
+            name: profile.full_name,
+            department: profile.department,
+            loginTime: new Date().toISOString()
+          },
+          token: session.access_token,
+          profile
+        };
+
+        localStorage.setItem('userSession', JSON.stringify(sessionData));
+
+        // Redirect to dashboard
+        navigate('/feedback-dashboard');
+      } else {
+        // Use mock authentication (fallback)
+        const user = mockCredentials?.find(
+          cred => cred?.email === formData?.email && cred?.password === formData?.password
+        );
+
+        if (!user) {
+          throw new Error('Invalid email or password. Please check your credentials and try again.');
+        }
+
+        // Create session
+        const sessionData = {
+          user: {
+            email: user?.email,
+            role: user?.role,
+            name: user?.role === 'Administrator' ? 'Dr. Sarah Johnson' :
+              user?.role === 'Doctor' ? 'Dr. Michael Chen' :
+                user?.role === 'Quality Manager' ? 'Lisa Rodriguez' : 'John Smith',
+            loginTime: new Date()?.toISOString()
+          },
+          token: 'mock-jwt-token-' + Date.now(),
+          isMockAuth: true
+        };
+
+        localStorage.setItem('userSession', JSON.stringify(sessionData));
+
+        // Redirect to dashboard
+        navigate('/feedback-dashboard');
       }
-
-      // Create session
-      const sessionData = {
-        user: {
-          email: user?.email,
-          role: user?.role,
-          name: user?.role === 'Administrator' ? 'Dr. Sarah Johnson' :
-            user?.role === 'Doctor' ? 'Dr. Michael Chen' :
-              user?.role === 'Quality Manager' ? 'Lisa Rodriguez' : 'John Smith',
-          loginTime: new Date()?.toISOString()
-        },
-        token: 'mock-jwt-token-' + Date.now()
-      };
-
-      localStorage.setItem('userSession', JSON.stringify(sessionData));
-
-      // Redirect to dashboard
-      window.location.href = '/feedback-dashboard';
-
     } catch (err) {
-      setError(err?.message);
+      console.error('Login error:', err);
+      setError(err?.message || 'An error occurred during login. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleForgotPassword = () => {
+  const handleForgotPassword = async () => {
     setError('');
-    alert('Please contact your system administrator at support@hospital.com or call (555) 123-4567 for password recovery assistance.');
+
+    if (useSupabase) {
+      const email = prompt('Enter your email address:');
+      if (email) {
+        try {
+          await authService.resetPassword(email);
+          alert('Password reset instructions have been sent to your email.');
+        } catch (err) {
+          alert('Error sending password reset email. Please try again.');
+        }
+      }
+    } else {
+      alert('Please contact your system administrator at support@hospital.com or call (555) 123-4567 for password recovery assistance.');
+    }
   };
 
   const handleErrorDismiss = () => {
@@ -288,21 +342,42 @@ const LoginPage = () => {
             ? 'bg-gradient-to-r from-blue-900/30 to-cyan-900/30 border-blue-800'
             : 'bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200'
             }`}>
-            <p className={`text-xs text-center mb-3 font-semibold ${isDarkMode ? 'text-gray-300' : 'text-text-secondary'
-              }`}>🔑 Demo Login Credentials:</p>
-            <div className="text-xs space-y-2">
-              <div className={`flex justify-between p-2 rounded-lg transition-colors ${isDarkMode
-                ? 'bg-gray-700/60 hover:bg-gray-700/80'
-                : 'bg-white/60 hover:bg-white/80'
+            {/* Backend Status Indicator */}
+            <div className="flex items-center justify-between mb-3">
+              <p className={`text-xs font-semibold ${isDarkMode ? 'text-gray-300' : 'text-text-secondary'
                 }`}>
-                <span className={`font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  admin@hospital.com
-                </span>
-                <span className={`font-mono font-bold ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>
-                  admin123
-                </span>
-              </div>
+                {useSupabase ? '🟢 Supabase Connected' : '🟡 Demo Mode'}
+              </p>
+              {!useSupabase && (
+                <a
+                  href="/SUPABASE_SETUP.md"
+                  target="_blank"
+                  className="text-xs text-blue-500 hover:text-blue-600 underline"
+                >
+                  Setup Guide
+                </a>
+              )}
             </div>
+
+            <p className={`text-xs text-center mb-3 font-semibold ${isDarkMode ? 'text-gray-300' : 'text-text-secondary'
+              }`}>
+              {useSupabase ? '✅ Real Backend' : '🔑 Demo Login Credentials:'}
+            </p>
+            {!useSupabase && (
+              <div className="text-xs space-y-2">
+                <div className={`flex justify-between p-2 rounded-lg transition-colors ${isDarkMode
+                  ? 'bg-gray-700/60 hover:bg-gray-700/80'
+                  : 'bg-white/60 hover:bg-white/80'
+                  }`}>
+                  <span className={`font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                    admin@hospital.com
+                  </span>
+                  <span className={`font-mono font-bold ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+                    admin123
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

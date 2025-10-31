@@ -11,11 +11,11 @@ const NotFound = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-red-50 via-pink-50 to-purple-50 p-4 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 p-4 relative overflow-hidden">
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
-        <div className="absolute w-96 h-96 bg-red-200/20 rounded-full blur-3xl top-1/4 right-1/4 animate-pulse"></div>
-        <div className="absolute w-96 h-96 bg-purple-200/20 rounded-full blur-3xl bottom-1/4 left-1/4 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+        <div className="absolute w-96 h-96 bg-blue-400/30 rounded-full blur-3xl top-1/4 right-1/4 animate-pulse"></div>
+        <div className="absolute w-96 h-96 bg-cyan-400/30 rounded-full blur-3xl bottom-1/4 left-1/4 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
       </div>
 
       <div className="text-center max-w-md relative" style={{ zIndex: 1 }}>

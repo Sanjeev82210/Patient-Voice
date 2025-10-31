@@ -1,10 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Icon from '../AppIcon';
 import Button from './Button';
 
 const Header = ({ className = '' }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const profileRef = useRef(null);
+  const moreRef = useRef(null);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setIsProfileOpen(false);
+      }
+      if (moreRef.current && !moreRef.current.contains(event.target)) {
+        setIsMoreOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const navigationItems = [
     {
@@ -23,6 +43,12 @@ const Header = ({ className = '' }) => {
       label: 'Analytics',
       path: '/feedback-analytics',
       icon: 'BarChart3',
+      badge: null
+    },
+    {
+      label: 'Overview',
+      path: '/analytics-overview',
+      icon: 'PieChart',
       badge: null
     },
     {
@@ -50,6 +76,16 @@ const Header = ({ className = '' }) => {
 
   const handleProfileToggle = () => {
     setIsProfileOpen(!isProfileOpen);
+    if (!isProfileOpen) {
+      setIsMoreOpen(false); // Close More menu when opening Profile
+    }
+  };
+
+  const handleMoreToggle = () => {
+    setIsMoreOpen(!isMoreOpen);
+    if (!isMoreOpen) {
+      setIsProfileOpen(false); // Close Profile menu when opening More
+    }
   };
 
   const handleLogout = () => {
@@ -57,7 +93,7 @@ const Header = ({ className = '' }) => {
   };
 
   return (
-    <header className={`backdrop-blur-lg bg-white/80 border-b border-gray-200/50 sticky top-0 z-50 h-16 shadow-lg ${className}`}>
+    <header className={`backdrop-blur-lg bg-white/80 border-b border-gray-200/50 sticky top-0 z-[100] h-16 shadow-lg ${className}`}>
       <div className="flex items-center justify-between h-full px-6">
         {/* Logo Section */}
         <div className="flex items-center space-x-8">
@@ -100,31 +136,39 @@ const Header = ({ className = '' }) => {
         {/* Right Section */}
         <div className="flex items-center space-x-4">
           {/* More Menu - Desktop */}
-          <div className="hidden lg:block relative">
+          <div className="hidden lg:block relative" ref={moreRef}>
             <Button
               variant="ghost"
               size="sm"
               iconName="MoreHorizontal"
-              onClick={() => setIsProfileOpen(!isProfileOpen)}
+              onClick={handleMoreToggle}
             >
               More
             </Button>
 
-            {isProfileOpen && (
-              <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-2xl z-[100] animate-fade-in">
-                <div className="py-1">
-                  {moreItems?.map((item) => (
-                    <button
-                      key={item?.path}
-                      onClick={() => handleNavigation(item?.path)}
-                      className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-blue-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1"
-                    >
-                      <Icon name={item?.icon} size={16} />
-                      <span>{item?.label}</span>
-                    </button>
-                  ))}
+            {isMoreOpen && (
+              <>
+                {/* Backdrop overlay */}
+                <div
+                  className="fixed inset-0 z-[10000]"
+                  onClick={() => setIsMoreOpen(false)}
+                />
+                {/* Dropdown menu */}
+                <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-2xl z-[10001] animate-fade-in">
+                  <div className="py-1">
+                    {moreItems?.map((item) => (
+                      <button
+                        key={item?.path}
+                        onClick={() => handleNavigation(item?.path)}
+                        className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-blue-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1"
+                      >
+                        <Icon name={item?.icon} size={16} />
+                        <span>{item?.label}</span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </>
             )}
           </div>
 
@@ -141,7 +185,7 @@ const Header = ({ className = '' }) => {
           </Button>
 
           {/* User Profile */}
-          <div className="relative">
+          <div className="relative" ref={profileRef}>
             <button
               onClick={handleProfileToggle}
               className="flex items-center space-x-3 p-2 rounded-md hover:bg-muted clinical-transition focus-clinical"
@@ -157,35 +201,43 @@ const Header = ({ className = '' }) => {
             </button>
 
             {isProfileOpen && (
-              <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-gray-200 rounded-xl shadow-2xl z-[100] animate-fade-in">
-                <div className="px-4 py-3 border-b border-gray-200">
-                  <div className="text-sm font-medium text-gray-900">Dr. Sarah Johnson</div>
-                  <div className="text-xs text-gray-500">sarah.johnson@hospital.com</div>
-                  <div className="text-xs text-gray-500 mt-1">Quality Manager • Cardiology</div>
+              <>
+                {/* Backdrop overlay */}
+                <div
+                  className="fixed inset-0 z-[10000]"
+                  onClick={() => setIsProfileOpen(false)}
+                />
+                {/* Dropdown menu */}
+                <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-gray-200 rounded-xl shadow-2xl z-[10001] animate-fade-in">
+                  <div className="px-4 py-3 border-b border-gray-200">
+                    <div className="text-sm font-medium text-gray-900">Dr. Sarah Johnson</div>
+                    <div className="text-xs text-gray-500">sarah.johnson@hospital.com</div>
+                    <div className="text-xs text-gray-500 mt-1">Quality Manager • Cardiology</div>
+                  </div>
+                  <div className="py-1">
+                    <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-blue-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1">
+                      <Icon name="User" size={16} />
+                      <span>Profile Settings</span>
+                    </button>
+                    <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-blue-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1">
+                      <Icon name="Settings" size={16} />
+                      <span>Preferences</span>
+                    </button>
+                    <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-blue-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1">
+                      <Icon name="HelpCircle" size={16} />
+                      <span>Help & Support</span>
+                    </button>
+                    <div className="border-t border-gray-200 my-1"></div>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1"
+                    >
+                      <Icon name="LogOut" size={16} />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
                 </div>
-                <div className="py-1">
-                  <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-blue-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1">
-                    <Icon name="User" size={16} />
-                    <span>Profile Settings</span>
-                  </button>
-                  <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-blue-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1">
-                    <Icon name="Settings" size={16} />
-                    <span>Preferences</span>
-                  </button>
-                  <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-blue-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1">
-                    <Icon name="HelpCircle" size={16} />
-                    <span>Help & Support</span>
-                  </button>
-                  <div className="border-t border-gray-200 my-1"></div>
-                  <button
-                    onClick={handleLogout}
-                    className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center space-x-2 transition-colors duration-200 rounded-lg mx-1"
-                  >
-                    <Icon name="LogOut" size={16} />
-                    <span>Sign Out</span>
-                  </button>
-                </div>
-              </div>
+              </>
             )}
           </div>
 

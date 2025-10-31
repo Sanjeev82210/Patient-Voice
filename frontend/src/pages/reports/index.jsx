@@ -140,18 +140,16 @@ const Reports = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 relative overflow-hidden">
       {/* Animated Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
-        <div className="absolute w-96 h-96 bg-indigo-200/20 rounded-full blur-3xl top-1/4 left-0 animate-pulse"></div>
-        <div className="absolute w-96 h-96 bg-purple-200/20 rounded-full blur-3xl bottom-1/4 right-0 animate-pulse" style={{ animationDelay: '2s' }}></div>
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute w-96 h-96 bg-blue-400/30 rounded-full blur-3xl top-1/4 left-0 animate-pulse"></div>
+        <div className="absolute w-96 h-96 bg-cyan-400/30 rounded-full blur-3xl bottom-1/4 right-0 animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
-      <div className="relative" style={{ zIndex: 1 }}>
-        <Header />
-      </div>
+      <Header />
 
-      <main className="pt-16 relative" style={{ zIndex: 1 }}>
+      <main className="pt-16">
         <div className="max-w-7xl mx-auto px-6 py-8">
           {/* Page Header */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8 animate-fade-in">
@@ -180,7 +178,7 @@ const Reports = () => {
                 key={tab?.id}
                 onClick={() => setActiveTab(tab?.id)}
                 className={`flex items-center space-x-2 px-4 py-3 text-sm font-medium rounded-t-md clinical-transition ${activeTab === tab?.id
-                    ? 'bg-card text-primary border-b-2 border-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                  ? 'bg-card text-primary border-b-2 border-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                   }`}
               >
                 <Icon name={tab?.icon} size={16} />
@@ -252,7 +250,7 @@ const Reports = () => {
                             <div className="flex items-center space-x-2 mb-1">
                               <h3 className="font-medium text-foreground">{schedule?.name}</h3>
                               <span className={`inline-flex items-center space-x-1 text-xs px-2 py-0.5 rounded ${schedule?.isActive
-                                  ? 'bg-success/10 text-success' : 'bg-muted text-muted-foreground'
+                                ? 'bg-success/10 text-success' : 'bg-muted text-muted-foreground'
                                 }`}>
                                 <Icon name={schedule?.isActive ? 'Play' : 'Pause'} size={10} />
                                 <span>{schedule?.status}</span>

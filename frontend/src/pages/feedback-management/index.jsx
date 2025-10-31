@@ -169,62 +169,65 @@ const FeedbackManagement = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 relative overflow-hidden">
+        <div className="min-h-screen bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 relative overflow-hidden">
             {/* Animated Background */}
-            <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
-                <div className="absolute w-96 h-96 bg-purple-200/20 rounded-full blur-3xl -top-48 -right-48 animate-pulse"></div>
-                <div className="absolute w-96 h-96 bg-pink-200/20 rounded-full blur-3xl -bottom-48 -left-48 animate-pulse" style={{ animationDelay: '1s' }}></div>
+            <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+                <div className="absolute w-96 h-96 bg-blue-400/30 rounded-full blur-3xl -top-48 -right-48 animate-pulse"></div>
+                <div className="absolute w-96 h-96 bg-cyan-400/30 rounded-full blur-3xl -bottom-48 -left-48 animate-pulse" style={{ animationDelay: '1s' }}></div>
             </div>
 
-            <div className="relative" style={{ zIndex: 1 }}>
-                <Header />
-            </div>
+            <Header />
 
-            <div className="pt-16 relative" style={{ zIndex: 1 }}>
+            <div className="pt-16">
                 <div className="px-6 py-8">
                     {/* Page Header */}
                     <div className="mb-8 animate-fade-in">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-                                    Feedback Management
-                                </h1>
-                                <p className="text-gray-600">
-                                    Review, categorize, and respond to patient feedback submissions
-                                </p>
-                            </div>
-
-                            <div className="flex items-center space-x-3">
-                                {/* View Mode Toggle */}
-                                <div className="hidden lg:flex items-center space-x-1 bg-muted rounded-lg p-1">
-                                    <Button
-                                        variant={viewMode === 'split' ? 'default' : 'ghost'}
-                                        size="sm"
-                                        iconName="Columns"
-                                        onClick={() => setViewMode('split')} />
-
-                                    <Button
-                                        variant={viewMode === 'list' ? 'default' : 'ghost'}
-                                        size="sm"
-                                        iconName="List"
-                                        onClick={() => setViewMode('list')} />
-
+                        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-blue-100 shadow-lg">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                    <div className="p-3 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl shadow-lg">
+                                        <Icon name="MessageSquare" size={32} className="text-white" />
+                                    </div>
+                                    <div>
+                                        <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                                            Feedback Management
+                                        </h1>
+                                        <p className="text-gray-600 mt-1">
+                                            Review, categorize, and respond to patient feedback submissions
+                                        </p>
+                                    </div>
                                 </div>
 
-                                <Button
-                                    variant="outline"
-                                    iconName="Download">
+                                <div className="flex items-center space-x-3">
+                                    {/* View Mode Toggle */}
+                                    <div className="hidden lg:flex items-center space-x-1 bg-muted rounded-lg p-1">
+                                        <Button
+                                            variant={viewMode === 'split' ? 'default' : 'ghost'}
+                                            size="sm"
+                                            iconName="Columns"
+                                            onClick={() => setViewMode('split')} />
 
-                                    Export Data
-                                </Button>
+                                        <Button
+                                            variant={viewMode === 'list' ? 'default' : 'ghost'}
+                                            size="sm"
+                                            iconName="List"
+                                            onClick={() => setViewMode('list')} />
 
-                                <Button
-                                    variant="default"
-                                    iconName="Plus"
-                                    onClick={() => window.location.href = '/patient-feedback-form'}>
+                                    </div>
 
-                                    New Feedback
-                                </Button>
+                                    <Button
+                                        variant="outline"
+                                        iconName="Download">
+                                        Export Data
+                                    </Button>
+
+                                    <Button
+                                        variant="default"
+                                        iconName="Plus"
+                                        onClick={() => window.location.href = '/patient-feedback-form'}>
+                                        New Feedback
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -268,7 +271,8 @@ const FeedbackManagement = () => {
                     </div>
 
                     {/* Mobile Back Button */}
-                    {viewMode === 'detail' &&
+                    {
+                        viewMode === 'detail' &&
                         <div className="lg:hidden fixed bottom-6 left-6 z-40">
                             <Button
                                 variant="default"
@@ -283,17 +287,17 @@ const FeedbackManagement = () => {
                             </Button>
                         </div>
                     }
-                </div>
-            </div>
+                </div >
+            </div >
             {/* Bulk Action Modal */}
-            <BulkActionModal
+            < BulkActionModal
                 isOpen={showBulkModal}
                 onClose={() => setShowBulkModal(false)}
                 selectedItems={selectedItems}
                 actionType={bulkActionType}
                 onConfirm={handleBulkActionConfirm} />
 
-        </div>);
+        </div >);
 
 };
 

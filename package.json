@@ -5,12 +5,13 @@
     "type": "module",
     "description": "PatientVoice - Healthcare Feedback Management System",
     "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "preview": "vite preview",
+        "dev": "cd frontend && vite",
+        "build": "cd frontend && vite build",
+        "preview": "cd frontend && vite preview",
         "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
     },
     "dependencies": {
+        "@supabase/supabase-js": "^2.78.0",
         "clsx": "^2.0.0",
         "lucide-react": "^0.294.0",
         "react": "^18.2.0",

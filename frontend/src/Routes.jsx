@@ -9,6 +9,7 @@ import FeedbackAnalytics from './pages/feedback-analytics';
 import FeedbackManagement from './pages/feedback-management';
 import FeedbackDashboard from './pages/feedback-dashboard';
 import Reports from './pages/reports';
+import AnalyticsOverview from './pages/analytics-overview';
 
 const Routes = () => {
   return (
@@ -21,6 +22,7 @@ const Routes = () => {
           <Route path="/patient-feedback-form" element={<PatientFeedbackForm />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/feedback-analytics" element={<FeedbackAnalytics />} />
+          <Route path="/analytics-overview" element={<AnalyticsOverview />} />
           <Route path="/feedback-management" element={<FeedbackManagement />} />
           <Route path="/feedback-dashboard" element={<FeedbackDashboard />} />
           <Route path="/reports" element={<Reports />} />
