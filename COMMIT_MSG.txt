@@ -1,0 +1,6 @@
+Finalize UI
+
+- Reports preview modal uses amber theme and fixed scroll
+- Converted key buttons to themed Button
+- Reports tabs and templates themed for amber
+- Minor consistency polish across Reports
