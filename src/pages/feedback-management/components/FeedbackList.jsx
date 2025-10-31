@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
-import { Checkbox } from '../../../components/ui/Checkbox';
+import { Checkbox } from '../../../components/ui/CheckBox';
 
 const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, onBulkAction }) => {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -9,151 +9,151 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
   const [sortOrder, setSortOrder] = useState('desc');
 
   const mockFeedbackData = [
-  {
-    id: 'FB-2024-001',
-    patientName: 'Sarah Johnson',
-    patientId: 'PT-45892',
-    department: 'Cardiology',
-    submissionDate: '2024-10-30T06:15:00Z',
-    overallRating: 4,
-    status: 'new',
-    priority: 'normal',
-    sentiment: 'positive',
-    responseRequired: true,
-    responseDeadline: '2024-11-02T17:00:00Z',
-    categories: {
-      medicalCare: 5,
-      staffBehavior: 4,
-      cleanliness: 4,
-      waitTime: 3,
-      communication: 4
+    {
+      id: 'FB-2024-001',
+      patientName: 'Sarah Johnson',
+      patientId: 'PT-45892',
+      department: 'Cardiology',
+      submissionDate: '2024-10-30T06:15:00Z',
+      overallRating: 4,
+      status: 'new',
+      priority: 'normal',
+      sentiment: 'positive',
+      responseRequired: true,
+      responseDeadline: '2024-11-02T17:00:00Z',
+      categories: {
+        medicalCare: 5,
+        staffBehavior: 4,
+        cleanliness: 4,
+        waitTime: 3,
+        communication: 4
+      },
+      summary: 'Excellent care from Dr. Martinez. Very thorough examination and clear explanation of treatment options.',
+      avatar: "https://images.unsplash.com/photo-1507532459814-b32f63cf4497",
+      avatarAlt: 'Professional headshot of middle-aged woman with brown hair smiling warmly'
     },
-    summary: 'Excellent care from Dr. Martinez. Very thorough examination and clear explanation of treatment options.',
-    avatar: "https://images.unsplash.com/photo-1507532459814-b32f63cf4497",
-    avatarAlt: 'Professional headshot of middle-aged woman with brown hair smiling warmly'
-  },
-  {
-    id: 'FB-2024-002',
-    patientName: 'Michael Chen',
-    patientId: 'PT-45893',
-    department: 'Emergency',
-    submissionDate: '2024-10-30T04:30:00Z',
-    overallRating: 2,
-    status: 'escalated',
-    priority: 'high',
-    sentiment: 'negative',
-    responseRequired: true,
-    responseDeadline: '2024-10-31T12:00:00Z',
-    categories: {
-      medicalCare: 3,
-      staffBehavior: 2,
-      cleanliness: 3,
-      waitTime: 1,
-      communication: 2
+    {
+      id: 'FB-2024-002',
+      patientName: 'Michael Chen',
+      patientId: 'PT-45893',
+      department: 'Emergency',
+      submissionDate: '2024-10-30T04:30:00Z',
+      overallRating: 2,
+      status: 'escalated',
+      priority: 'high',
+      sentiment: 'negative',
+      responseRequired: true,
+      responseDeadline: '2024-10-31T12:00:00Z',
+      categories: {
+        medicalCare: 3,
+        staffBehavior: 2,
+        cleanliness: 3,
+        waitTime: 1,
+        communication: 2
+      },
+      summary: 'Waited 4 hours in emergency. Staff seemed overwhelmed and communication was poor.',
+      avatar: "https://images.unsplash.com/photo-1645817095143-01b4feb70470",
+      avatarAlt: 'Professional headshot of Asian man in business attire with confident expression'
     },
-    summary: 'Waited 4 hours in emergency. Staff seemed overwhelmed and communication was poor.',
-    avatar: "https://images.unsplash.com/photo-1645817095143-01b4feb70470",
-    avatarAlt: 'Professional headshot of Asian man in business attire with confident expression'
-  },
-  {
-    id: 'FB-2024-003',
-    patientName: 'Emily Rodriguez',
-    patientId: 'PT-45894',
-    department: 'Pediatrics',
-    submissionDate: '2024-10-29T16:45:00Z',
-    overallRating: 5,
-    status: 'responded',
-    priority: 'normal',
-    sentiment: 'positive',
-    responseRequired: false,
-    responseDeadline: null,
-    categories: {
-      medicalCare: 5,
-      staffBehavior: 5,
-      cleanliness: 5,
-      waitTime: 4,
-      communication: 5
+    {
+      id: 'FB-2024-003',
+      patientName: 'Emily Rodriguez',
+      patientId: 'PT-45894',
+      department: 'Pediatrics',
+      submissionDate: '2024-10-29T16:45:00Z',
+      overallRating: 5,
+      status: 'responded',
+      priority: 'normal',
+      sentiment: 'positive',
+      responseRequired: false,
+      responseDeadline: null,
+      categories: {
+        medicalCare: 5,
+        staffBehavior: 5,
+        cleanliness: 5,
+        waitTime: 4,
+        communication: 5
+      },
+      summary: 'Outstanding pediatric care. Dr. Williams was amazing with my 5-year-old daughter.',
+      avatar: "https://images.unsplash.com/photo-1507532459814-b32f63cf4497",
+      avatarAlt: 'Professional headshot of Hispanic woman with long dark hair and warm smile'
     },
-    summary: 'Outstanding pediatric care. Dr. Williams was amazing with my 5-year-old daughter.',
-    avatar: "https://images.unsplash.com/photo-1507532459814-b32f63cf4497",
-    avatarAlt: 'Professional headshot of Hispanic woman with long dark hair and warm smile'
-  },
-  {
-    id: 'FB-2024-004',
-    patientName: 'Robert Thompson',
-    patientId: 'PT-45895',
-    department: 'Orthopedics',
-    submissionDate: '2024-10-29T11:20:00Z',
-    overallRating: 3,
-    status: 'in-review',
-    priority: 'normal',
-    sentiment: 'neutral',
-    responseRequired: true,
-    responseDeadline: '2024-11-01T17:00:00Z',
-    categories: {
-      medicalCare: 4,
-      staffBehavior: 3,
-      cleanliness: 4,
-      waitTime: 2,
-      communication: 3
+    {
+      id: 'FB-2024-004',
+      patientName: 'Robert Thompson',
+      patientId: 'PT-45895',
+      department: 'Orthopedics',
+      submissionDate: '2024-10-29T11:20:00Z',
+      overallRating: 3,
+      status: 'in-review',
+      priority: 'normal',
+      sentiment: 'neutral',
+      responseRequired: true,
+      responseDeadline: '2024-11-01T17:00:00Z',
+      categories: {
+        medicalCare: 4,
+        staffBehavior: 3,
+        cleanliness: 4,
+        waitTime: 2,
+        communication: 3
+      },
+      summary: 'Good medical care but appointment scheduling could be improved. Long wait times.',
+      avatar: "https://images.unsplash.com/photo-1585066047759-3438c34cf676",
+      avatarAlt: 'Professional headshot of middle-aged Caucasian man with gray beard in suit'
     },
-    summary: 'Good medical care but appointment scheduling could be improved. Long wait times.',
-    avatar: "https://images.unsplash.com/photo-1585066047759-3438c34cf676",
-    avatarAlt: 'Professional headshot of middle-aged Caucasian man with gray beard in suit'
-  },
-  {
-    id: 'FB-2024-005',
-    patientName: 'Lisa Park',
-    patientId: 'PT-45896',
-    department: 'Radiology',
-    submissionDate: '2024-10-28T14:10:00Z',
-    overallRating: 4,
-    status: 'resolved',
-    priority: 'normal',
-    sentiment: 'positive',
-    responseRequired: false,
-    responseDeadline: null,
-    categories: {
-      medicalCare: 4,
-      staffBehavior: 5,
-      cleanliness: 4,
-      waitTime: 4,
-      communication: 4
-    },
-    summary: 'Efficient MRI process. Technician was very professional and made me feel comfortable.',
-    avatar: "https://images.unsplash.com/photo-1668049221607-1f2df20621cc",
-    avatarAlt: 'Professional headshot of young Asian woman with short black hair and professional attire'
-  }];
+    {
+      id: 'FB-2024-005',
+      patientName: 'Lisa Park',
+      patientId: 'PT-45896',
+      department: 'Radiology',
+      submissionDate: '2024-10-28T14:10:00Z',
+      overallRating: 4,
+      status: 'resolved',
+      priority: 'normal',
+      sentiment: 'positive',
+      responseRequired: false,
+      responseDeadline: null,
+      categories: {
+        medicalCare: 4,
+        staffBehavior: 5,
+        cleanliness: 4,
+        waitTime: 4,
+        communication: 4
+      },
+      summary: 'Efficient MRI process. Technician was very professional and made me feel comfortable.',
+      avatar: "https://images.unsplash.com/photo-1668049221607-1f2df20621cc",
+      avatarAlt: 'Professional headshot of young Asian woman with short black hair and professional attire'
+    }];
 
 
   const dataToUse = feedbackItems?.length > 0 ? feedbackItems : mockFeedbackData;
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'new':return 'bg-blue-100 text-blue-800';
-      case 'in-review':return 'bg-yellow-100 text-yellow-800';
-      case 'responded':return 'bg-green-100 text-green-800';
-      case 'resolved':return 'bg-gray-100 text-gray-800';
-      case 'escalated':return 'bg-red-100 text-red-800';
-      default:return 'bg-gray-100 text-gray-800';
+      case 'new': return 'bg-blue-100 text-blue-800';
+      case 'in-review': return 'bg-yellow-100 text-yellow-800';
+      case 'responded': return 'bg-green-100 text-green-800';
+      case 'resolved': return 'bg-gray-100 text-gray-800';
+      case 'escalated': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
   };
 
   const getPriorityIcon = (priority) => {
     switch (priority) {
-      case 'high':return { name: 'AlertTriangle', color: 'text-red-500' };
-      case 'urgent':return { name: 'AlertCircle', color: 'text-red-600' };
-      default:return null;
+      case 'high': return { name: 'AlertTriangle', color: 'text-red-500' };
+      case 'urgent': return { name: 'AlertCircle', color: 'text-red-600' };
+      default: return null;
     }
   };
 
   const getRatingStars = (rating) => {
     return Array.from({ length: 5 }, (_, i) =>
-    <Icon
-      key={i}
-      name="Star"
-      size={16}
-      className={i < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'} />
+      <Icon
+        key={i}
+        name="Star"
+        size={16}
+        className={i < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'} />
 
     );
   };
@@ -171,9 +171,9 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
 
   const handleSelectItem = (itemId) => {
     setSelectedItems((prev) =>
-    prev?.includes(itemId) ?
-    prev?.filter((id) => id !== itemId) :
-    [...prev, itemId]
+      prev?.includes(itemId) ?
+        prev?.filter((id) => id !== itemId) :
+        [...prev, itemId]
     );
   };
 
@@ -211,28 +211,28 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
           </div>
 
           {selectedItems?.length > 0 &&
-          <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2">
               <Button
-              variant="outline"
-              size="sm"
-              iconName="MessageSquare"
-              onClick={() => onBulkAction('respond', selectedItems)}>
+                variant="outline"
+                size="sm"
+                iconName="MessageSquare"
+                onClick={() => onBulkAction('respond', selectedItems)}>
 
                 Bulk Response
               </Button>
               <Button
-              variant="outline"
-              size="sm"
-              iconName="ArrowRight"
-              onClick={() => onBulkAction('assign', selectedItems)}>
+                variant="outline"
+                size="sm"
+                iconName="ArrowRight"
+                onClick={() => onBulkAction('assign', selectedItems)}>
 
                 Assign
               </Button>
               <Button
-              variant="outline"
-              size="sm"
-              iconName="Tag"
-              onClick={() => onBulkAction('tag', selectedItems)}>
+                variant="outline"
+                size="sm"
+                iconName="Tag"
+                onClick={() => onBulkAction('tag', selectedItems)}>
 
                 Tag
               </Button>
@@ -268,8 +268,7 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
           return (
             <div
               key={feedback?.id}
-              className={`p-6 cursor-pointer clinical-transition ${
-              isActive ? 'bg-muted border-l-4 border-l-primary' : 'hover:bg-muted/50'}`
+              className={`p-6 cursor-pointer clinical-transition ${isActive ? 'bg-muted border-l-4 border-l-primary' : 'hover:bg-muted/50'}`
               }
               onClick={() => onSelectFeedback(feedback)}>
 
@@ -313,10 +312,10 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
                           {feedback?.status?.replace('-', ' ')}
                         </span>
                         {priorityIcon &&
-                        <Icon
-                          name={priorityIcon?.name}
-                          size={16}
-                          className={priorityIcon?.color} />
+                          <Icon
+                            name={priorityIcon?.name}
+                            size={16}
+                            className={priorityIcon?.color} />
 
                         }
                       </div>
@@ -332,7 +331,7 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
                           {formatDate(feedback?.submissionDate)}
                         </span>
                         {feedback?.responseRequired &&
-                        <span className="text-sm text-orange-600">
+                          <span className="text-sm text-orange-600">
                             <Icon name="MessageCircle" size={14} className="inline mr-1" />
                             Response needed
                           </span>
@@ -347,9 +346,8 @@ const FeedbackList = ({ feedbackItems = [], onSelectFeedback, selectedFeedback, 
                         <span className="text-sm font-medium text-foreground">
                           {feedback?.overallRating}.0
                         </span>
-                        <span className={`text-xs px-2 py-1 rounded ${
-                        feedback?.sentiment === 'positive' ? 'bg-green-100 text-green-800' :
-                        feedback?.sentiment === 'negative' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}`
+                        <span className={`text-xs px-2 py-1 rounded ${feedback?.sentiment === 'positive' ? 'bg-green-100 text-green-800' :
+                            feedback?.sentiment === 'negative' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}`
                         }>
                           {feedback?.sentiment}
                         </span>

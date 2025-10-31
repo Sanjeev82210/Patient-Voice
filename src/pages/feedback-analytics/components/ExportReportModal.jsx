@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 import Select from '../../../components/ui/Select';
-import { Checkbox } from '../../../components/ui/Checkbox';
+import { Checkbox } from '../../../components/ui/CheckBox';
 
 const ExportReportModal = ({ isOpen, onClose, className = '' }) => {
   const [exportConfig, setExportConfig] = useState({
@@ -61,14 +61,14 @@ const ExportReportModal = ({ isOpen, onClose, className = '' }) => {
 
   const handleExport = async () => {
     setIsExporting(true);
-    
+
     // Simulate export process
     await new Promise(resolve => setTimeout(resolve, 2000));
-    
+
     // Create mock download
     const fileName = `feedback-analytics-report-${new Date()?.toISOString()?.split('T')?.[0]}.${exportConfig?.format}`;
     console.log(`Exporting report: ${fileName}`, exportConfig);
-    
+
     setIsExporting(false);
     onClose();
   };
@@ -200,8 +200,8 @@ const ExportReportModal = ({ isOpen, onClose, className = '' }) => {
               <div>
                 <div className="text-muted-foreground">Estimated Size:</div>
                 <div className="font-medium text-foreground">
-                  {exportConfig?.includeCharts && exportConfig?.includeRawData ? '15-20 MB' : 
-                   exportConfig?.includeCharts ? '8-12 MB' : '2-5 MB'}
+                  {exportConfig?.includeCharts && exportConfig?.includeRawData ? '15-20 MB' :
+                    exportConfig?.includeCharts ? '8-12 MB' : '2-5 MB'}
                 </div>
               </div>
             </div>

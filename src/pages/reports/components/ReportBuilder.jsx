@@ -3,7 +3,7 @@ import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 import Select from '../../../components/ui/Select';
 import Input from '../../../components/ui/Input';
-import { Checkbox } from '../../../components/ui/Checkbox';
+import { Checkbox } from '../../../components/ui/CheckBox';
 
 const ReportBuilder = ({ onGenerateReport, onPreviewReport }) => {
   const [reportConfig, setReportConfig] = useState({
@@ -100,8 +100,8 @@ const ReportBuilder = ({ onGenerateReport, onPreviewReport }) => {
     }
   };
 
-  const isConfigValid = reportConfig?.type && reportConfig?.dateRange && 
-                       reportConfig?.departments?.length > 0 && reportConfig?.metrics?.length > 0;
+  const isConfigValid = reportConfig?.type && reportConfig?.dateRange &&
+    reportConfig?.departments?.length > 0 && reportConfig?.metrics?.length > 0;
 
   return (
     <div className="card-clinical">

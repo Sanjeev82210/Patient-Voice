@@ -3,7 +3,7 @@ import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 import Select from '../../../components/ui/Select';
 import Input from '../../../components/ui/Input';
-import { Checkbox } from '../../../components/ui/Checkbox';
+import { Checkbox } from '../../../components/ui/CheckBox';
 
 const ReportScheduler = ({ onScheduleReport, onClose }) => {
   const [scheduleConfig, setScheduleConfig] = useState({
@@ -112,16 +112,16 @@ const ReportScheduler = ({ onScheduleReport, onClose }) => {
     }
   };
 
-  const isConfigValid = scheduleConfig?.reportType && scheduleConfig?.frequency && 
-                       scheduleConfig?.recipients?.length > 0;
+  const isConfigValid = scheduleConfig?.reportType && scheduleConfig?.frequency &&
+    scheduleConfig?.recipients?.length > 0;
 
   const getNextRunDate = () => {
     const now = new Date();
     const [hours, minutes] = scheduleConfig?.time?.split(':')?.map(Number);
-    
+
     let nextRun = new Date();
     nextRun?.setHours(hours, minutes, 0, 0);
-    
+
     if (scheduleConfig?.frequency === 'daily') {
       if (nextRun <= now) {
         nextRun?.setDate(nextRun?.getDate() + 1);
@@ -137,11 +137,11 @@ const ReportScheduler = ({ onScheduleReport, onClose }) => {
         nextRun?.setMonth(nextRun?.getMonth() + 1);
       }
     }
-    
-    return nextRun?.toLocaleDateString('en-US', { 
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'long', 
+
+    return nextRun?.toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
@@ -173,7 +173,7 @@ const ReportScheduler = ({ onScheduleReport, onClose }) => {
             {/* Report Configuration */}
             <div className="space-y-4">
               <h3 className="font-medium text-foreground">Report Configuration</h3>
-              
+
               <Select
                 label="Report Type"
                 description="Choose the type of report to generate automatically"
@@ -237,7 +237,7 @@ const ReportScheduler = ({ onScheduleReport, onClose }) => {
             {/* Recipients */}
             <div className="space-y-4">
               <h3 className="font-medium text-foreground">Recipients</h3>
-              
+
               {/* Add Custom Recipient */}
               <div className="flex space-x-2">
                 <Input
@@ -270,11 +270,10 @@ const ReportScheduler = ({ onScheduleReport, onClose }) => {
                       key={recipient?.email}
                       onClick={() => handleAddPredefinedRecipient(recipient?.email)}
                       disabled={scheduleConfig?.recipients?.includes(recipient?.email)}
-                      className={`text-left p-3 rounded-md border clinical-transition ${
-                        scheduleConfig?.recipients?.includes(recipient?.email)
+                      className={`text-left p-3 rounded-md border clinical-transition ${scheduleConfig?.recipients?.includes(recipient?.email)
                           ? 'border-primary bg-primary/5 text-muted-foreground cursor-not-allowed'
                           : 'border-border hover:border-primary hover:bg-muted'
-                      }`}
+                        }`}
                     >
                       <div className="text-sm font-medium text-foreground">{recipient?.name}</div>
                       <div className="text-xs text-muted-foreground">{recipient?.role}</div>
@@ -314,7 +313,7 @@ const ReportScheduler = ({ onScheduleReport, onClose }) => {
             {/* Options */}
             <div className="space-y-3">
               <h3 className="font-medium text-foreground">Options</h3>
-              
+
               <Checkbox
                 label="Include Charts and Visualizations"
                 description="Add graphs and charts to the automated report"

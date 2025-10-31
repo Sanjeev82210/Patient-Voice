@@ -1,14 +1,14 @@
 import React from 'react';
 import Input from '../../../components/ui/Input';
 import Select from '../../../components/ui/Select';
-import { Checkbox } from '../../../components/ui/Checkbox';
+import { Checkbox } from '../../../components/ui/CheckBox';
 
-const PatientDemographics = ({ 
-  formData, 
-  onUpdate, 
-  isAnonymous, 
+const PatientDemographics = ({
+  formData,
+  onUpdate,
+  isAnonymous,
   onAnonymousToggle,
-  errors = {} 
+  errors = {}
 }) => {
   const ageRangeOptions = [
     { value: '18-25', label: '18-25 years' },
@@ -67,7 +67,7 @@ const PatientDemographics = ({
             Help us understand your visit better (optional for anonymous feedback)
           </p>
         </div>
-        
+
         <div className="flex items-center space-x-3">
           <Checkbox
             label="Submit anonymously"

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
-import { Checkbox } from '../../../components/ui/Checkbox';
+import { Checkbox } from '../../../components/ui/CheckBox';
 
-const SubmissionConfirmation = ({ 
-  onSubmit, 
-  onBack, 
+const SubmissionConfirmation = ({
+  onSubmit,
+  onBack,
   isSubmitting = false,
   formData = {},
-  isAnonymous = false 
+  isAnonymous = false
 }) => {
   const [followUpPreferences, setFollowUpPreferences] = useState({
     emailUpdates: false,
@@ -20,14 +20,14 @@ const SubmissionConfirmation = ({
 
   const handleSubmit = () => {
     if (!agreedToTerms) return;
-    
+
     const submissionData = {
       ...formData,
       followUpPreferences: isAnonymous ? {} : followUpPreferences,
       submittedAt: new Date()?.toISOString(),
       isAnonymous
     };
-    
+
     onSubmit(submissionData);
   };
 
@@ -92,14 +92,14 @@ const SubmissionConfirmation = ({
               checked={followUpPreferences?.emailUpdates}
               onChange={(e) => handlePreferenceChange('emailUpdates', e?.target?.checked)}
             />
-            
+
             <Checkbox
               label="Allow phone contact for clarification if needed"
               description="Our quality team may contact you for additional details"
               checked={followUpPreferences?.phoneContact}
               onChange={(e) => handlePreferenceChange('phoneContact', e?.target?.checked)}
             />
-            
+
             <Checkbox
               label="Participate in future patient experience surveys"
               description="Help us continue improving by participating in follow-up surveys"
@@ -126,7 +126,7 @@ const SubmissionConfirmation = ({
           <div>
             <h4 className="font-medium text-blue-900 mb-1">Your Privacy is Protected</h4>
             <p className="text-sm text-blue-800">
-              Your feedback is processed securely and used solely for healthcare quality improvement. 
+              Your feedback is processed securely and used solely for healthcare quality improvement.
               We comply with HIPAA regulations and will never share your personal information without consent.
             </p>
           </div>
@@ -168,7 +168,7 @@ const SubmissionConfirmation = ({
         >
           Back to Review
         </Button>
-        
+
         <Button
           variant="default"
           onClick={handleSubmit}
